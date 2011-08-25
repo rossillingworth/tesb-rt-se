@@ -35,9 +35,9 @@
     </modules>
 
     <properties>
-        <cxf.version>2.4.1</cxf.version>
+        <cxf.version>2.4.2</cxf.version>
         <eclipse.osgi.version>3.6.0.v20100517</eclipse.osgi.version>
-        <karaf.version>2.2.1</karaf.version>
+        <karaf.version>2.2.2</karaf.version>
         <zookeeper.version>3.3.3</zookeeper.version>
         <!--  Test dependencies -->
 		<junit.version>4.8.2</junit.version>
