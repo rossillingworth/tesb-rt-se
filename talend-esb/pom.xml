@@ -34,6 +34,7 @@
 		<!-- OSGi (Karaf, Felix, Aries) -->
 		<aries.version>0.3</aries.version>
 		<!--karaf.version>2.2.1</karaf.version-->
+		<org.apache.karaf.tooling.version>2.2.1</org.apache.karaf.tooling.version>
 		<osgi.compendium.version>4.2.0</osgi.compendium.version>
 		<osgi.core.version>4.2.0</osgi.core.version>
 
@@ -690,7 +691,7 @@
 			<plugin>
 				<groupId>org.apache.karaf.tooling</groupId>
 				<artifactId>features-maven-plugin</artifactId>
-                <version>${karaf.version}</version>
+                <version>${org.apache.karaf.tooling.version}</version>
 				<executions>
 					<execution>
 						<id>add-features-to-repo</id>
