@@ -196,7 +196,7 @@
 		<tranql.version>1.6</tranql.version>
 		<woodstox.version>4.1.1</woodstox.version>
 		<woodstox.stax2-api.version>3.1.1</woodstox.stax2-api.version>
-        <wss4j.version>1.6.0</wss4j.version>
+        <wss4j.version>1.6.2</wss4j.version>
         <joda.time.version>1.6.2</joda.time.version>
 
         <opensaml.version>2.4.1</opensaml.version>
@@ -809,6 +809,9 @@
 								<!-- CXF Features -->
 								<feature>tif-saaj-impl</feature>
 								<feature>cxf</feature>
+								<!-- Hack -->
+								<feature>opensaml</feature>
+								<feature>cxf-jaxb</feature>
 								<!-- TIF Features -->
 								<feature>tif-core</feature>
 								<feature>tif-test</feature>
