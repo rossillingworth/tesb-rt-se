@@ -809,9 +809,6 @@
 								<!-- CXF Features -->
 								<feature>tif-saaj-impl</feature>
 								<feature>cxf</feature>
-								<!-- Hack -->
-								<feature>opensaml</feature>
-								<feature>cxf-jaxb</feature>
 								<!-- TIF Features -->
 								<feature>tif-core</feature>
 								<feature>tif-test</feature>

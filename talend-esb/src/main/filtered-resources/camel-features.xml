@@ -68,7 +68,7 @@
     <bundle dependency="true">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.junit/${junit.bundle.version}</bundle>
     <bundle>mvn:org.apache.camel/camel-test/${camel.version}</bundle>
   </feature> 
-  <feature name="cxf" version="${camel.version}" resolver="(obr)" start-level='50'>
+  <!-- feature name="cxf" version="${camel.version}" resolver="(obr)" start-level='50'>
     <bundle dependency="true">mvn:org.apache.geronimo.specs/geronimo-jms_1.1_spec/${geronimo-jms.version}</bundle>
     <bundle dependency="true">mvn:org.springframework/spring-jms/${spring.version}</bundle>
     <bundle dependency="true">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.asm/${asm.bundle.version}</bundle>
@@ -106,7 +106,7 @@
     <bundle dependency="true">mvn:org.apache.geronimo.specs/geronimo-ws-metadata_2.0_spec/${geronimo-ws-metadata.version}</bundle>
     <bundle>mvn:org.apache.cxf/cxf-bundle/${cxf.version}</bundle>
     <bundle dependency="true">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-io/${commons-io.bundle.version}</bundle>
-  </feature>
+  </feature -->
   <feature name='camel-cxf' version='${pom.version}' resolver='(obr)' start-level='50'>
     <feature version="${camel.version}">camel-spring</feature>
     <feature>jetty</feature>
