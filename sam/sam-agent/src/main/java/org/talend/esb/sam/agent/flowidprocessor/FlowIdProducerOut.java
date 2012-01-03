@@ -33,14 +33,31 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.cxf.ws.addressing.ContextUtils;
 import org.talend.esb.sam.agent.message.FlowIdHelper;
 
-public class FlowIdProducerOut<T extends Message> extends AbstractPhaseInterceptor<T> {
+/**
+ * The Class FlowIdProducerOut used for writing FlowId in outcoming messages.
+ * 
+ * @param <T>
+ *            the generic type
+ */
+public class FlowIdProducerOut<T extends Message> extends
+        AbstractPhaseInterceptor<T> {
 
     private static final Logger LOG = Logger.getLogger(FlowIdProducerOut.class.getName());
 
+    /**
+     * Instantiates a new flow id producer out.
+     */
     public FlowIdProducerOut() {
         super(Phase.USER_LOGICAL);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.apache.cxf.interceptor.Interceptor#handleMessage(org.apache.cxf.message
+     * .Message)
+     */
     public void handleMessage(T message) throws Fault {
         if (LOG.isLoggable(Level.FINEST)) {
             LOG.finest("FlowIdProducerOut Interceptor called. isOutbound: "
@@ -61,6 +78,14 @@ public class FlowIdProducerOut<T extends Message> extends AbstractPhaseIntercept
 
     }
 
+    /**
+     * Handling out responce.
+     * 
+     * @param message
+     *            the message
+     * @throws Fault
+     *             the fault
+     */
     protected void handleResponseOut(T message) throws Fault {
         Message reqMsg = message.getExchange().getInMessage();
         if (reqMsg == null) {
@@ -68,7 +93,7 @@ public class FlowIdProducerOut<T extends Message> extends AbstractPhaseIntercept
             return;
         }
 
-        //No flowId for oneway message
+        // No flowId for oneway message
         Exchange ex = reqMsg.getExchange();
         if (ex.isOneWay()) {
             return;
@@ -76,12 +101,15 @@ public class FlowIdProducerOut<T extends Message> extends AbstractPhaseIntercept
 
         String reqFid = FlowIdHelper.getFlowId(reqMsg);
 
-        //if some interceptor throws fault before FlowIdProducerIn fired 
+        // if some interceptor throws fault before FlowIdProducerIn fired
         if (reqFid == null) {
-            LOG.fine("Some interceptor throws fault.Setting FlowId in response.");
+            if (LOG.isLoggable(Level.FINE)) {
+                LOG.fine("Some interceptor throws fault.Setting FlowId in response.");
+            }
             reqFid = FlowIdProtocolHeaderCodec.readFlowId(message);
         }
-        
+
+        // write IN message to SAM repo in case fault
         if (reqFid == null) {
             reqFid = FlowIdSoapCodec.readFlowId(message);
         }
@@ -93,7 +121,8 @@ public class FlowIdProducerOut<T extends Message> extends AbstractPhaseIntercept
         } else {
             reqFid = ContextUtils.generateUUID();
             if (LOG.isLoggable(Level.FINE)) {
-                LOG.fine("No flowId found in incoming message! Generate new flowId " + reqFid);
+                LOG.fine("No flowId found in incoming message! Generate new flowId "
+                        + reqFid);
             }
         }
 
@@ -101,6 +130,14 @@ public class FlowIdProducerOut<T extends Message> extends AbstractPhaseIntercept
 
     }
 
+    /**
+     * Handling out request.
+     * 
+     * @param message
+     *            the message
+     * @throws Fault
+     *             the fault
+     */
     protected void handleRequestOut(T message) throws Fault {
         String flowId = FlowIdHelper.getFlowId(message);
         if (flowId == null
