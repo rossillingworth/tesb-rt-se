@@ -31,27 +31,33 @@ public abstract class AbstractDatabaseDialect implements DatabaseDialect {
 
     private DataFieldMaxValueIncrementer incrementer;
 
+    /* (non-Javadoc)
+     * @see org.talend.esb.sam.server.persistence.dialects.DatabaseDialect#getIncrementer()
+     */
     @Override
     public DataFieldMaxValueIncrementer getIncrementer() {
         return incrementer;
     }
 
     /**
-     * Injector method for Spring
-     * 
-     * @param increment
+     * Injector method for Spring.
+     *
+     * @param incrementer the new incrementer
      */
     public void setIncrementer(DataFieldMaxValueIncrementer incrementer) {
         this.incrementer = incrementer;
     }
 
+    /* (non-Javadoc)
+     * @see org.talend.esb.sam.server.persistence.dialects.DatabaseDialect#getDataQuery(org.talend.esb.sam.server.persistence.dialects.QueryFilter)
+     */
     @Override
     public String getDataQuery(QueryFilter filter) {
         String query = getQuery();
         String whereClause = filter.getWhereClause();
         String result = null;
         if (whereClause != null && whereClause.length() > 0) {
-            result = query.replaceAll(SUBSTITUTION_STRING, " WHERE " + whereClause);	
+            result = query.replaceAll(SUBSTITUTION_STRING, " AND " + whereClause);	
         } else {
             result = query.replaceAll(SUBSTITUTION_STRING, "");
         }
@@ -60,9 +66,9 @@ public abstract class AbstractDatabaseDialect implements DatabaseDialect {
 
     /**
      * This method should return a query string with {@link #SUBSTITUTION_STRING} placeholder
-     * for where clause
-     * 
-     * @return
+     * for where clause.
+     *
+     * @return the query
      */
     abstract String getQuery();
 

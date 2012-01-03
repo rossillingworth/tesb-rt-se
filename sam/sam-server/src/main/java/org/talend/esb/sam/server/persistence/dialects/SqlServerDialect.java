@@ -21,10 +21,9 @@ package org.talend.esb.sam.server.persistence.dialects;
 
 
 /**
- * Class to encapsulate difference between databases
+ * Class to encapsulate difference between databases.
  *
  * @author pvasilchenko
- *
  */
 public class SqlServerDialect extends AbstractDatabaseDialect {
     private static final String QUERY = "select "
@@ -39,14 +38,16 @@ public class SqlServerDialect extends AbstractDatabaseDialect {
             + "select [MI_FLOW_ID], rn from "
             + "( "
             + "select [MI_FLOW_ID], ROW_NUMBER() over(order by MAX([EI_TIMESTAMP]) DESC) as rn "
-            + "from [EVENTS] as subq "
-            + "%%FILTER%% "
+            + "from [EVENTS] as subq WHERE (MI_FLOW_ID is not null) %%FILTER%% "
             + "group by [MI_FLOW_ID] "
             + ") as subq1 where rn <= :offset + :limit "
             + ") as subq2 where rn > :offset "
             + ") "
             + "order by [EI_TIMESTAMP] DESC";
 
+    /* (non-Javadoc)
+     * @see org.talend.esb.sam.server.persistence.dialects.AbstractDatabaseDialect#getQuery()
+     */
     @Override
     String getQuery() {
         return QUERY;

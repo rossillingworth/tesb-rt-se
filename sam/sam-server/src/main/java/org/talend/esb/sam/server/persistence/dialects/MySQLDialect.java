@@ -21,10 +21,9 @@ package org.talend.esb.sam.server.persistence.dialects;
 
 
 /**
- * Class to encapsulate difference between databases
+ * Class to encapsulate difference between databases.
  *
  * @author zubairov
- *
  */
 public class MySQLDialect extends AbstractDatabaseDialect {
 
@@ -33,12 +32,15 @@ public class MySQLDialect extends AbstractDatabaseDialect {
             + "MI_PORT_TYPE, MI_OPERATION_NAME, MI_TRANSPORT_TYPE, "
             + "ORIG_HOSTNAME,  ORIG_IP "
             + "from "
-            + "(select MI_FLOW_ID from EVENTS %%FILTER%% where MI_FLOW_ID is not null group by MI_FLOW_ID "
+            + "(select MI_FLOW_ID from EVENTS WHERE (MI_FLOW_ID is not null) %%FILTER%% group by MI_FLOW_ID "
             + "order by MAX(EI_TIMESTAMP) DESC LIMIT :limit OFFSET :offset) as SUBQ "
             + "LEFT JOIN EVENTS ON "
             + "SUBQ.MI_FLOW_ID = EVENTS.MI_FLOW_ID "
             + "order by EI_TIMESTAMP DESC";
 
+    /* (non-Javadoc)
+     * @see org.talend.esb.sam.server.persistence.dialects.AbstractDatabaseDialect#getQuery()
+     */
     @Override
     String getQuery() {
         return QUERY;
