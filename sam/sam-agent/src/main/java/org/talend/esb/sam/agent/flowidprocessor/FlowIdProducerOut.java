@@ -20,10 +20,12 @@
 package org.talend.esb.sam.agent.flowidprocessor;
 
 import java.lang.ref.WeakReference;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageUtils;
@@ -31,6 +33,7 @@ import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.cxf.ws.addressing.ContextUtils;
+import org.talend.esb.sam.agent.eventproducer.EventProducerInterceptor;
 import org.talend.esb.sam.agent.message.FlowIdHelper;
 
 /**
@@ -42,7 +45,8 @@ import org.talend.esb.sam.agent.message.FlowIdHelper;
 public class FlowIdProducerOut<T extends Message> extends
         AbstractPhaseInterceptor<T> {
 
-    private static final Logger LOG = Logger.getLogger(FlowIdProducerOut.class.getName());
+    private static final Logger LOG = Logger.getLogger(FlowIdProducerOut.class
+            .getName());
 
     /**
      * Instantiates a new flow id producer out.
@@ -111,6 +115,20 @@ public class FlowIdProducerOut<T extends Message> extends
 
         // write IN message to SAM repo in case fault
         if (reqFid == null) {
+            Message inMsg = ex.getInMessage();
+
+            reqFid = FlowIdProtocolHeaderCodec.readFlowId(inMsg);
+            if (null != reqFid) {
+                if (LOG.isLoggable(Level.FINE)) {
+                    LOG.fine("FlowId '" + reqFid
+                            + "' found in message of fault incoming exchange.");
+                    LOG.fine("Calling EventProducerInterceptor to log IN message");
+                }
+                handleINEvent(ex, reqFid);
+            }
+        }
+
+        if (reqFid == null) {
             reqFid = FlowIdSoapCodec.readFlowId(message);
         }
 
@@ -120,6 +138,16 @@ public class FlowIdProducerOut<T extends Message> extends
             }
         } else {
             reqFid = ContextUtils.generateUUID();
+            // write IN message to SAM repo in case fault
+            if (null != ex.getOutFaultMessage()) {
+                if (LOG.isLoggable(Level.FINE)) {
+                    LOG.fine("FlowId '" + reqFid
+                            + "' generated for fault message.");
+                    LOG.fine("Calling EventProducerInterceptor to log IN message");
+                }
+                handleINEvent(ex, reqFid);
+            }
+
             if (LOG.isLoggable(Level.FINE)) {
                 LOG.fine("No flowId found in incoming message! Generate new flowId "
                         + reqFid);
@@ -162,6 +190,36 @@ public class FlowIdProducerOut<T extends Message> extends
         }
 
         FlowIdHelper.setFlowId(message, flowId);
+    }
+
+    /**
+     * Calling EventProducerInterceptor in case of logging faults.
+     * 
+     * @param exchange
+     *            the message exchange
+     * @param reqFid
+     *            the FlowId
+     * 
+     * @throws Fault
+     *             the fault
+     */
+    protected void handleINEvent(Exchange exchange, String reqFid) throws Fault {
+        Message inMsg = exchange.getInMessage();
+
+        EventProducerInterceptor epi = null;
+        FlowIdHelper.setFlowId(inMsg, reqFid);
+
+        ListIterator<Interceptor<? extends Message>> interceptors = inMsg
+                .getInterceptorChain().getIterator();
+
+        while (interceptors.hasNext() && epi == null) {
+            Interceptor<? extends Message> interceptor = interceptors.next();
+
+            if (interceptor instanceof EventProducerInterceptor) {
+                epi = (EventProducerInterceptor) interceptor;
+                epi.handleMessage(inMsg);
+            }
+        }
     }
 
 }
