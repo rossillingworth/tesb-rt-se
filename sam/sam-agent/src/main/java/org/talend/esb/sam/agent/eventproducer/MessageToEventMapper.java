@@ -143,16 +143,14 @@ public class MessageToEventMapper {
      * @return the message id
      */
     private String getMessageId(Message message) {
-        String messageId;
+        String messageId = null;
 
         AddressingPropertiesImpl addrProp =
             ContextUtils.retrieveMAPs(message, false, MessageUtils.isOutbound(message));
         if (addrProp != null) {
             messageId = addrProp.getMessageID().getValue();
-        } else {
-            //to do: generate and transfer MessageId ...
-            messageId = ContextUtils.generateUUID();
         }
+
         return messageId;
     }
 
