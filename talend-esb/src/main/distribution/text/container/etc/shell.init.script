@@ -1,5 +1,21 @@
-// Copyright (C) 2010 Talend Inc. - www.talend.com
-
+//
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+//
 // This script is run each time a shell is created.
 // You can define here closures or variables that will be available
 // in each session.
@@ -8,21 +24,46 @@ ld = { log:display $args } ;
 lde = { log:display-exception $args } ;
 la = { osgi:list -t 0 $args } ;
 cl = { config:list "(service.pid=$args)" } ;
+
+// system:* aliases
 system:shutdown = { osgi:shutdown $args } ;
 system:start-level = { osgi:start-level $args } ;
-services:list = { ls $args } ;
-bundles:list = { osgi:list $args } ;
-bundles:install = { osgi:install $args };
-bundles:uninstall = { osgi:uninstall $args } ;
-bundles:start = { osgi:start $args } ;
-bundles:stop = { osgi:stop $args } ;
-bundles:headers = { osgi:headers $args } ;
-bundles:info = { osgi:info $args } ;
-bundles:refresh = { osgi:refresh $args } ;
-bundles:resolve = { osgi:resolve $args } ;
-bundles:restart = { osgi:restart $args } ;
-bundles:start-level = { osgi:start-level $args } ;
-bundles:update = { osgi:update $args } ;
+
+// service:* aliases
+service:list = { ls $args } ;
+
+// bundle:* aliases
+bundle:list = { osgi:list $args } ;
+bundle:install = { osgi:install $args };
+bundle:uninstall = { osgi:uninstall $args } ;
+bundle:start = { osgi:start $args } ;
+bundle:stop = { osgi:stop $args } ;
+bundle:headers = { osgi:headers $args } ;
+bundle:info = { osgi:info $args } ;
+bundle:refresh = { osgi:refresh $args } ;
+bundle:resolve = { osgi:resolve $args } ;
+bundle:restart = { osgi:restart $args } ;
+bundle:start-level = { osgi:start-level $args } ;
+bundle:update = { osgi:update $args } ;
+
+// package:* aliases
+package:export = { packages:exports $args } ;
+package:import = { packages:imports $args } ;
+
+// feature:* aliases
+feature:add-url = { features:addurl $args } ;
+feature:refresh-url = { features:refreshurl $args } ;
+feature:info = { features:info $args } ;
+feature:remove-repository = { features:removerepository $args } ;
+feature:install = { features:install $args } ;
+feature:remove-url = { features:removeurl $args } ;
+feature:list = { features:list $args } ;
+feature:uninstall = { features:uninstall $args } ;
+feature:list-repository = { features:listrepositories $args } ;
+feature:list-url = { features:listurl $args } ;
+feature:list-version = { features:listversions $args } ;
+
+// TIF aliases
 tif:list = { features:list | grep -i tif } ;
 tif-core:install = { features:install tif-core } ;
 tif-core:uninstall = { features:uninstall tif-core } ;
@@ -33,12 +74,12 @@ tif-messaging:uninstall = { features:uninstall tif-messaging } ;
 tif-ws:install = { features:install tif-ws } ;
 tif-ws:uninstall = { features:uninstall tif-ws } ;
 tif-communication:install = { features:install tif-communication } ;
-tif-communication:uninstall = { features:uninstall tif-communicationÂ } ;
+tif-communication:uninstall = { features:uninstall tif-communication } ;
 tif-logging:install = { features:install tif-logging } ;
 tif-logging:uninstall = { features:uninstall tif-logging } ;
 tif-languages:install = { features:install tif-languages } ;
 tif-languages:uninstall = { features:uninstall tif-languages } ;
-tif-monitoring:install = {Â features:install tif-monitoring } ;
+tif-monitoring:install = { features:install tif-monitoring } ;
 tif-monitoring:uninstall = { features:uninstall tif-monitoring } ;
 tif-db-connectivity:install = { features:install tif-db-connectivity } ;
 tif-db-connectivity:uninstall = { features:uninstall tif-db-connectivity } ;
@@ -52,6 +93,8 @@ tif-scheduler:install = { features:install tif-scheduler } ;
 tif-scheduler:uninstall = { features:uninstall tif-scheduler } ;
 tif-system:install = { features:install tif-system } ;
 tif-system:uninstall = { features:uninstall tif-system } ;
+
+// TESB aliases
 tesb:start-sts = { features:install tesb-sts } ;
 tesb:start-sam = { features:install tesb-derby-starter; features:install tesb-sam-server } ; // (install derby-starter and sam feature)
 tesb:start-locator = { features:install tesb-zookeeper-server } ; // (install zookeeper feature)
