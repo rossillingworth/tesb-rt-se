@@ -316,11 +316,11 @@
 		</dependency>
 
 		<!-- TIF -->
-		<dependency>
+		<!--dependency>
 			<groupId>org.talend.camel</groupId>
 			<artifactId>camel-tis</artifactId>
 			<version>${tif.version}</version>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>com.talend.if.assembly</groupId>
 			<artifactId>talend-if</artifactId>
