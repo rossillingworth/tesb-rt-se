@@ -42,11 +42,12 @@
     </licenses>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <endpoint.prefix>http://localhost:8040/services</endpoint.prefix>
         <sts.endpoint.prefix>${endpoint.prefix}</sts.endpoint.prefix>
         <!-- for STS war-->
         <!--sts.endpoint.prefix>http://localhost:8080</sts.endpoint.prefix-->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <cxf.version>2.5.1</cxf.version>
         <camel.version>2.8.3</camel.version>
@@ -54,15 +55,10 @@
         <spring.version>3.0.6.RELEASE</spring.version>
         <activemq.version>5.5.0</activemq.version>
         <eclipse.osgi.version>3.6.2.R36x_v20110210</eclipse.osgi.version>
-        <zookeeper.version>3.3.3</zookeeper.version>
-        <derby.version>10.8.1.2</derby.version>
-        <servlet.api.version>2.5</servlet.api.version>
         <aries.version>0.3</aries.version>
         <jetty.version>7.5.4.v20111024</jetty.version>
         <!-- Test dependencies -->
         <junit.version>4.10</junit.version>
-        <!-- Log dependencies -->
-        <log4j.version>1.2.16</log4j.version>
     </properties>
 
     <build>
