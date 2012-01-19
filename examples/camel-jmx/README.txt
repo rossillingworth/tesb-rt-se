@@ -82,14 +82,13 @@ export CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxrem
 Alternatively, if your Tomcat installation is configured to work with the Tomcat Maven Plugin (http://tinyurl.com/4yxzjna) 
 you can also start Tomcat and then deploy the war by entering "mvn tomcat:deploy" for Tomcat 7 or "mvn tomcat:deploy -PTomcat6"
 for Tomcat 6.
-
 2) Start Tomcat
 
 * In Talend ESB OSGi container:
 1) Start TESB container.
-2) Type command in TESB container: 		
+2) Type command in TESB container:
 features:addurl mvn:org.talend.esb.examples/camel-jmx-feature/5.0.2/xml
-4) Type command in TESB container
+3) Type command in TESB container
 features:install camel-jmx-service
 
 Using JConsole to find MBean Attributes
@@ -101,7 +100,7 @@ put service:jmx:rmi:///jndi/rmi://localhost:6969/jmxrmi into Remote Process fiel
 
 If you're using the TESB OSGi container:
 put service:jmx:rmi://localhost:44444/jndi/rmi://localhost:1099/karaf-trun into Remote Process field,
-with (default) username of "tadmin	" and password of "tadmin"
+with (default) username of "tadmin" and password of "tadmin"
 
 3) connect
 4) choose Mbean tab, and look in the org.apache.camel and org.apache.activemq 
