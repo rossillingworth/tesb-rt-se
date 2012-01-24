@@ -149,7 +149,7 @@ public class GenericServiceProviderImpl implements GenericServiceProvider,
         return operation;
     }
 
-    protected boolean isOperationRequestResponse(String operationName) {
+    private boolean isOperationRequestResponse(String operationName) {
         // is better way to get communication style?
         return null != context.getMessageContext().get(
                 MessageContext.OUTBOUND_MESSAGE_ATTACHMENTS);
