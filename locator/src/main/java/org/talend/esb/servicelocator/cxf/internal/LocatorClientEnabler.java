@@ -36,9 +36,9 @@ public class LocatorClientEnabler {
 
     private ServiceLocator locatorClient;
 
-    private Map<String, LocatorSelectionStrategy> locatorSelectionStrategies;
+    private Map<String, LocatorSelectionStrategyFactory> locatorSelectionStrategies;
 
-    private LocatorSelectionStrategy locatorSelectionStrategy;
+    private LocatorSelectionStrategyFactory locatorSelectionStrategyFactory;
 
     private String defaultLocatorSelectionStrategy;
 
@@ -52,19 +52,28 @@ public class LocatorClientEnabler {
     public void setBus(Bus bus) {
     }
 
+    /**
+     * Sets a map representing the locatorSelectionStrategies and sets locatorSelectionStrategy to the DEFAULT_STRATEGY.
+     * @param locatorSelectionStrategies
+     */
     public void setLocatorSelectionStrategies(
-            Map<String, LocatorSelectionStrategy> locatorSelectionStrategies) {
+            Map<String, LocatorSelectionStrategyFactory> locatorSelectionStrategies) {
         this.locatorSelectionStrategies = locatorSelectionStrategies;
-        this.locatorSelectionStrategy = locatorSelectionStrategies.get(DEFAULT_STRATEGY);
+        this.locatorSelectionStrategyFactory = locatorSelectionStrategies.get(DEFAULT_STRATEGY);
     }
 
+    /**
+     * If the String argument locatorSelectionStrategy is as key in the map representing the locatorSelectionStrategies, the
+     * corresponding strategy is selected, else it remains unchanged.
+     * @param locatorSelectionStrategy
+     */
     public void setLocatorSelectionStrategy(String locatorSelectionStrategy) {
         if (LOG.isLoggable(Level.FINE)) {
             LOG.log(Level.FINE, "Strategy " + locatorSelectionStrategy
                     + " was set for LocatorClientRegistrar.");
         }
         if (locatorSelectionStrategies.containsKey(locatorSelectionStrategy)) {
-            this.locatorSelectionStrategy = locatorSelectionStrategies.get(locatorSelectionStrategy);
+            this.locatorSelectionStrategyFactory = locatorSelectionStrategies.get(locatorSelectionStrategy);
         } else {
             if (LOG.isLoggable(Level.WARNING)) {
                 LOG.log(Level.WARNING, "LocatorSelectionStrategy " + locatorSelectionStrategy
@@ -73,13 +82,19 @@ public class LocatorClientEnabler {
         }
     }
 
+    /**
+     * If the String argument defaultLocatorSelectionStrategy is as key in the map representing the locatorSelectionStrategies, the
+     * corresponding strategy is selected and set as default strategy, else both the selected strategy and the default strategy remain
+     * unchanged.
+     * @param defaultLocatorSelectionStrategy
+     */
     public void setDefaultLocatorSelectionStrategy(String defaultLocatorSelectionStrategy) {
         if (LOG.isLoggable(Level.FINE)) {
             LOG.log(Level.FINE, "Default strategy " + defaultLocatorSelectionStrategy
                     + " was set for LocatorClientRegistrar.");
         }
         if (locatorSelectionStrategies.containsKey(defaultLocatorSelectionStrategy)) {
-            this.locatorSelectionStrategy = locatorSelectionStrategies.get(defaultLocatorSelectionStrategy);
+            this.locatorSelectionStrategyFactory = locatorSelectionStrategies.get(defaultLocatorSelectionStrategy);
             this.defaultLocatorSelectionStrategy = defaultLocatorSelectionStrategy;
             // setLocatorSelectionStrategy(defaultLocatorSelectionStrategy);
         } else {
@@ -98,6 +113,17 @@ public class LocatorClientEnabler {
         enable(conduitSelectorHolder, matcher, null);
     }
 
+    /**
+     * The selectionStrategy given as String argument is selected as locatorSelectionStrategy.
+     * If selectionStrategy is null, the defaultLocatorSelectionStrategy is used instead.
+     * Then the new locatorSelectionStrategy is connected to the locatorClient and the matcher.
+     * A new LocatorTargetSelector is created, set to the locatorSelectionStrategy and then set
+     * as selector in the conduitSelectorHolder.
+     * 
+     * @param conduitSelectorHolder
+     * @param matcher
+     * @param selectionStrategy
+     */
     public void enable(ConduitSelectorHolder conduitSelectorHolder, SLPropertiesMatcher matcher,
             String selectionStrategy) {
         LocatorTargetSelector selector = new LocatorTargetSelector();
@@ -109,6 +135,7 @@ public class LocatorClientEnabler {
             setLocatorSelectionStrategy(defaultLocatorSelectionStrategy);
         }
 
+        LocatorSelectionStrategy locatorSelectionStrategy = locatorSelectionStrategyFactory.getInstance();
         locatorSelectionStrategy.setServiceLocator(locatorClient);
         if (matcher != null) {
             locatorSelectionStrategy.setMatcher(matcher);
