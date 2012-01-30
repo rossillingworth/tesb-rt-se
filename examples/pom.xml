@@ -29,7 +29,7 @@
         <name>Talend Inc.</name>
         <url>www.talend.com</url>
     </organization>
-    <inceptionYear>2011</inceptionYear>
+    <inceptionYear>2011-2012</inceptionYear>
     <url>http://talend.com</url>
 
     <licenses>
@@ -49,8 +49,8 @@
         <!-- for STS war-->
         <!--sts.endpoint.prefix>http://localhost:8080</sts.endpoint.prefix-->
 
-        <cxf.version>2.5.1</cxf.version>
-        <camel.version>2.8.3</camel.version>
+        <cxf.version>2.5.2</cxf.version>
+        <camel.version>2.8.4</camel.version>
         <karaf.version>2.2.5</karaf.version>
         <spring.version>3.0.6.RELEASE</spring.version>
         <activemq.version>5.5.0</activemq.version>

@@ -29,7 +29,7 @@
 		<name>Talend Inc.</name>
 		<url>www.talend.com</url>
 	</organization>
-	<inceptionYear>2011</inceptionYear>
+	<inceptionYear>2011-2012</inceptionYear>
     <url>http://talend.com</url>
 
 	<licenses>
@@ -40,7 +40,7 @@
 			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
-	
+
     <issueManagement>
         <system>Jira</system>
         <url>https://jira.sopera.de/browse/TESB</url>
@@ -113,7 +113,7 @@
         <jetty.version>7.5.4.v20111024</jetty.version>
         <derbynet.bundle.version>10.8.1.2_1</derbynet.bundle.version>
         <pax-web-jsp.version>1.0.8</pax-web-jsp.version>
-        <camel-tis.version>2.8.3.0</camel-tis.version>
+        <camel-tis.version>2.8.4.0</camel-tis.version>
 
         <cxf.build-utils.version>2.4.0</cxf.build-utils.version>
         <cxf.resources.base.path />
