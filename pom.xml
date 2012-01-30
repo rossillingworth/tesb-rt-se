@@ -101,18 +101,17 @@
         <dom4j.bundle.version>1.6.1_4</dom4j.bundle.version>
         <jaxen.bundle.version>1.1.1_2</jaxen.bundle.version>
         <javax.servlet.version>2.5</javax.servlet.version>
-        <commons-pool.version>1.5.4</commons-pool.version>
+        <commons-pool.version>1.5.6</commons-pool.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <gson.version>1.7.1</gson.version>
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
-        <jdom.bundle.version>1.1_3</jdom.bundle.version>
+        <jdom.bundle.version>1.1_4</jdom.bundle.version>
         <commons-fileupload.version>1.2.2</commons-fileupload.version>
         <org.apache.cxf.dosgi.version>1.2</org.apache.cxf.dosgi.version>
         <osgi.core.version>4.2.0</osgi.core.version>
         <osgi.compendium.version>4.2.0</osgi.compendium.version>
         <jetty.version>7.5.4.v20111024</jetty.version>
         <derbynet.bundle.version>10.8.1.2_1</derbynet.bundle.version>
-        <pax-web-jsp.version>1.0.8</pax-web-jsp.version>
         <camel-tis.version>2.8.4.0</camel-tis.version>
 
         <cxf.build-utils.version>2.4.0</cxf.build-utils.version>
