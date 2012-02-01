@@ -197,42 +197,13 @@
 			<version>${karaf.version}</version>
 			<type>tar.gz</type>
 		</dependency>
-		<dependency>
-            <groupId>org.apache.karaf.assemblies.features</groupId>
-            <artifactId>standard</artifactId>
-            <version>${karaf.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.karaf.assemblies.features</groupId>
-            <artifactId>enterprise</artifactId>
-            <version>${karaf.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-		</dependency>
-
-		<!-- Apache Camel -->
-		<dependency>
-			<groupId>org.apache.camel.karaf</groupId>
-			<artifactId>apache-camel</artifactId>
-			<version>${camel.version}</version>
-			<type>xml</type>
-			<classifier>features</classifier>
-		</dependency>
 
         <!-- CXF -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-bundle</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf.karaf</groupId>
             <artifactId>apache-cxf</artifactId>
             <version>${cxf.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
+            <type>tar.gz</type>
         </dependency>
 
         <!-- ActiveMQ -->
@@ -273,26 +244,19 @@
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-karaf</artifactId>
-            <version>${activemq.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
             <artifactId>apache-activemq</artifactId>
             <version>${activemq.version}</version>
             <type>tar.gz</type>
             <classifier>bin</classifier>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>apache-activemq</artifactId>
             <version>${activemq.version}</version>
             <type>zip</type>
             <classifier>bin</classifier>
-        </dependency>        
-		
+        </dependency>
+
 		<!-- Apache ZooKeeper -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
@@ -337,12 +301,12 @@
 			<classifier>examples</classifier>
 			<type>zip</type>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.talend.esb.sts</groupId>
 			<artifactId>cxf-sts-war</artifactId>
 			<version>${project.version}</version>
 			<type>war</type>
-		</dependency>
+		</dependency-->
 
 	</dependencies>
 
@@ -393,7 +357,7 @@
                                 <descriptor>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</descriptor>
                                 <descriptor>mvn:org.apache.activemq/activemq-karaf/${activemq.version}/xml/features</descriptor>
                                 <descriptor>mvn:org.apache.karaf.cellar/apache-karaf-cellar/${cellar.version}/xml/features</descriptor>
-                                <descriptor>mvn:org.jclouds.karaf/feature/${jclouds.version}/xml/features</descriptor>
+                                <!--descriptor>mvn:org.jclouds.karaf/feature/${jclouds.version}/xml/features</descriptor-->
 								<descriptor>file:${basedir}/target/classes/tif-features.xml</descriptor>
 								<descriptor>file:${basedir}/../features/target/classes/features.xml</descriptor>
 							</descriptors>
