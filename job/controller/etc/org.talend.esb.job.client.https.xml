@@ -42,6 +42,10 @@
                 file="./etc/keystore.jks"/>
       </sec:keyManagers>
       <sec:cipherSuitesFilter>
+        <!-- these filters ensure that a ciphersuite with
+          export-suitable or null encryption is used,
+          but exclude anonymous Diffie-Hellman key change as
+          this is vulnerable to man-in-the-middle attacks -->
         <sec:include>.*_EXPORT_.*</sec:include>
         <sec:include>.*_EXPORT1024_.*</sec:include>
         <sec:include>.*_WITH_DES_.*</sec:include>
