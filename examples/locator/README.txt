@@ -63,6 +63,31 @@ Linux:
 Windows:
 .\zookeeper\bin\zkServer.cmd stop
 
+3) To run demo for https endpoint you need configure SSL in container first.
+
+Configuring via web console and configuration file org.ops4j.pax.web.cfg leads to hangs all requests via SSL.
+
+In  etc/org.ops4j.pax.web.cfg add string:
+org.ops4j.pax.web.config.file=./etc/jetty.xml
+
+In etc/jetty.xml add additional connector:
+  <Call name="addConnector">
+    <Arg>
+      <New class="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
+        <Set name="Port">8443</Set>
+        <Set name="maxIdleTime">30000</Set>
+        <Set name="keystore"><SystemProperty name="jetty.home" default="." />/etc/keystores/client_111.jks</Set>
+        <Set name="password">password</Set>
+        <Set name="keyPassword">password</Set>
+        <Set name="truststore"><SystemProperty name="jetty.home" default="." />/etc/keystores/truststore_111.jks</Set>
+        <Set name="trustPassword">password</Set>
+      </New>
+    </Arg>
+  </Call>
+  
+Copy the files client_111.jks and truststore_111.jks from client project to the container
+    Initial folder:Talend-ESB-<version>/examples/talend/tesb/locator/client/src/main/resources/certs/
+    Destination folder: Talend-ESB-<version>/container/etc/keystores/
 
 Building the Demo
 -----------------
