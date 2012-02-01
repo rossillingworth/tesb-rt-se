@@ -155,11 +155,6 @@
                                     <classifier>org.talend.esb.job.client.sts</classifier>
                                 </artifact>
                                 <artifact>
-                                    <file>etc/org.talend.esb.job.client.https.xml</file>
-                                    <type>xml</type>
-                                    <classifier>org.talend.esb.job.client.https</classifier>
-                                </artifact>
-                                <artifact>
                                     <file>etc/keystores/clientKeystore.properties</file>
                                     <type>properties</type>
                                     <classifier>clientKeystore</classifier>

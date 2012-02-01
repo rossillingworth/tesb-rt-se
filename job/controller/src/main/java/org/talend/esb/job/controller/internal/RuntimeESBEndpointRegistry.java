@@ -24,7 +24,6 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import org.apache.cxf.Bus;
-import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.apache.cxf.common.injection.NoJSR250Annotations;
 import org.apache.neethi.Policy;
 import org.talend.esb.job.controller.ESBEndpointConstants;
@@ -38,16 +37,21 @@ import routines.system.api.ESBConsumer;
 import routines.system.api.ESBEndpointInfo;
 import routines.system.api.ESBEndpointRegistry;
 
-@NoJSR250Annotations
+@NoJSR250Annotations(unlessNull = "bus") 
 public class RuntimeESBEndpointRegistry implements ESBEndpointRegistry {
 
     private static final String LOGGING = "logging";
-    private static final String HTTPS_CONFIG = "https.config";
 
+    private Bus bus;
     private EventFeature samFeature;
     private PolicyProvider policyProvider;
     private Map<String, String> clientProperties;
     private Map<String, String> stsProperties;
+
+    @javax.annotation.Resource
+    public void setBus(Bus bus) {
+        this.bus = bus;
+    }
 
     public void setSamFeature(EventFeature samFeature) {
         this.samFeature = samFeature;
@@ -110,8 +114,6 @@ public class RuntimeESBEndpointRegistry implements ESBEndpointRegistry {
                 (String) props.get(ESBEndpointConstants.PASSWORD),
                 clientProperties,
                 stsProperties);
-        SpringBusFactory bf = new SpringBusFactory();
-        Bus bus = bf.createBus(clientProperties.get(HTTPS_CONFIG));
         return new RuntimeESBConsumer(
                 serviceName, portName, operationName, publishedEndpointUrl,
                 OperationStyle.isRequestResponse((String) props
