@@ -29,7 +29,7 @@
         <name>Talend Inc.</name>
         <url>www.talend.com</url>
     </organization>
-    <inceptionYear>2011-2012</inceptionYear>
+    <inceptionYear>2011</inceptionYear>
     <url>http://talend.com</url>
 
     <licenses>
@@ -134,6 +134,32 @@
                         </execution>
                     </executions>
                 </plugin>
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.9.0</version>
+					<configuration>
+						<header>header.txt</header>
+						<aggregate>true</aggregate>
+						<includes>
+							<include>**/src/**</include>
+						</includes>
+						<excludes>
+							<exclude>NOTICE</exclude>
+							<exclude>README</exclude>
+							<exclude>Third-party libraries and Licensies.txt</exclude>
+							<exclude>**/THIRD-PARTY.properties</exclude>
+							<exclude>**/ivy.xml</exclude>
+							<exclude>**/.gitignore</exclude>
+							<exclude>**/target/**</exclude>
+							<exclude>**/src/main/resources/schemas/**</exclude>
+						</excludes>
+						<properties>
+							<year>${project.inceptionYear}</year>
+							<project.name>${project.name}</project.name>
+						</properties>
+					</configuration>
+				</plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
@@ -154,6 +180,16 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+			</plugin>
+			<!--plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+			</plugin-->
+        </plugins>
     </build>
 
     <repositories>
