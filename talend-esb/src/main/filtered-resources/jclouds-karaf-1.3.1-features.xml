@@ -344,7 +344,6 @@
 
     <feature name='jclouds-go2cloud-jhb1' description='Go2Cloud implementation targeted to Johannesburg1' version='1.3.1' resolver='(obr)'>
         <feature version='1.3.1'>jclouds</feature>
-        <feature version='1.3.1'>jclouds</feature>
         <feature version='1.3.1'>jclouds-driver-jsch</feature>
         <bundle>mvn:org.jclouds.api/elasticstack/1.3.1</bundle>
         <bundle>mvn:org.jclouds.provider/go2cloud-jhb1/1.3.1</bundle>
