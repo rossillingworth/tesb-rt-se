@@ -266,6 +266,11 @@
 						<missingFile>./THIRD-PARTY.properties</missingFile>
 						<useMissingFile>true</useMissingFile>
 						<canUpdateCopyright>true</canUpdateCopyright>
+						<excludes>
+							<exclude>job/controller/src/test/data-service-authentication/**/*.properties</exclude>
+							<exclude>job/controller/src/test/job/**/*.properties</exclude>
+							<exclude>job/controller/src/test/tos-data-service/**/*.properties</exclude>
+						</excludes>
 					</configuration>
 					<executions>
 						<execution>
