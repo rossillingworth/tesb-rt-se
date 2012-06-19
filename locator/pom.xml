@@ -94,6 +94,13 @@
             <artifactId>cxf-rt-core</artifactId>
             <version>${cxf.version}</version>
         </dependency>
+        <dependency>
+        	<groupId>log4j</groupId>
+        	<artifactId>log4j</artifactId>
+        	<version>1.2.17</version>
+        	<type>bundle</type>
+        	<scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
