@@ -293,14 +293,6 @@
                                     <outputDirectory>target/dependencies</outputDirectory>
                                     <destFileName>apache-camel-${camel.version}-features.xml</destFileName>
                                 </artifactItem>
-                                <!-- workaround for Felix FileInstall 3.2.2 (TESB-5681) -->
-                                <artifactItem>
-                                    <groupId>org.apache.felix</groupId>
-                                    <artifactId>org.apache.felix.fileinstall</artifactId>
-                                    <version>3.2.2</version>
-                                    <type>jar</type>
-                                    <outputDirectory>target/dependencies</outputDirectory>
-                                </artifactItem>
                                 <!-- workaround for saaj-api version (TESB-4643, TESB-4754) -->
                                 <artifactItem>
                                     <groupId>org.apache.cxf.karaf</groupId>
