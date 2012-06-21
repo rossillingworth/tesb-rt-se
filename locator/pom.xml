@@ -13,14 +13,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.talend.esb</groupId>
 	<artifactId>locator</artifactId>
-	<version>5.0.2.a</version>
+	<version>5.0.3</version>
 	<name>Service Locator Client for CXF</name>
 	<packaging>bundle</packaging>
 
 	<parent>
 		<groupId>org.talend.esb</groupId>
 		<artifactId>esb-parent</artifactId>
-		<version>5.0.2</version>
+		<version>5.0.3</version>
 	</parent>
 
 	<dependencies>
