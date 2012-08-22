@@ -284,6 +284,15 @@
                                     <outputDirectory>target/dependencies</outputDirectory>
                                     <destFileName>apache-camel-${camel.version}-features.xml</destFileName>
                                 </artifactItem>
+
+                                <artifactItem>
+                                    <groupId>xerces</groupId>
+                                    <artifactId>xercesImpl</artifactId>
+                                    <version>2.9.1</version>
+                                    <type>jar</type>
+                                    <outputDirectory>target/dependencies/xerces</outputDirectory>
+                                </artifactItem>
+
                                 <!-- workaround for saaj-api version (TESB-4643, TESB-4754) -->
                                 <artifactItem>
                                     <groupId>org.apache.cxf.karaf</groupId>

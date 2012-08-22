@@ -287,6 +287,13 @@
             </includes>
             <outputDirectory>/container/lib/</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>target/dependencies/xerces</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>/container/lib/endorsed</outputDirectory>
+        </fileSet>
 
         <!-- Copy license and other files from root -->
         <fileSet>
