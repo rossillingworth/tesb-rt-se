@@ -19,6 +19,8 @@
  */
 package org.talend.esb.job.controller.internal;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Dictionary;
@@ -30,6 +32,7 @@ import javax.xml.transform.Source;
 import javax.xml.ws.handler.MessageContext;
 
 import org.apache.cxf.helpers.CastUtils;
+import org.apache.cxf.staxutils.StaxUtils;
 import org.osgi.service.cm.ConfigurationException;
 import org.talend.esb.job.controller.ESBEndpointConstants;
 import org.talend.esb.job.controller.GenericOperation;
@@ -79,8 +82,12 @@ public class GenericServiceProviderImpl implements GenericServiceProvider,
                     + operationQName + " cannot be found");
         }
         try {
-            Object result = esbProviderCallback.invoke(
-                    DOM4JMarshaller.sourceToDocument(request),
+            ByteArrayOutputStream os = new java.io.ByteArrayOutputStream();
+            StaxUtils.copy(request, os);
+            org.dom4j.Document requestDoc = new org.dom4j.io.SAXReader()
+                    .read(new ByteArrayInputStream(os.toByteArray()));
+            Object result = esbProviderCallback.invoke(requestDoc,
+//                    DOM4JMarshaller.sourceToDocument(request),
                     isOperationRequestResponse(operationQName.getLocalPart()));
 
             // oneway
