@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.talend.esb</groupId>
         <artifactId>esb-parent</artifactId>
-        <version>5.1.2</version>
+        <version>5.1.3-SNAPSHOT</version>
     </parent>
 
     <name>Service Activity Monitoring</name>
