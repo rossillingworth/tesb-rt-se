@@ -19,6 +19,7 @@
  */
 package org.talend.esb.servicelocator.cxf.internal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +99,7 @@ abstract class ReloadSelectionStrategy extends LocatorSelectionStrategy {
             }
         }
         availableAddressesMap.put(serviceName, availableAddresses);
-        return availableAddresses;
+        return new ArrayList<String>(availableAddresses);
     }
 
     private synchronized boolean isReloadAdresses() {
