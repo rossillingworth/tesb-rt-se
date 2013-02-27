@@ -504,8 +504,8 @@
         </file>
         <!-- patch for TESB-7884 -->
         <file>
-            <source>${basedir}/target/dependencies/camel-karaf-commands-2.10.4.jar</source>
-            <outputDirectory>/container/system/org/apache/camel/karaf/camel-karaf-commands/2.10.4/</outputDirectory>
+            <source>${basedir}/target/dependencies/camel-karaf-commands-2.10.4.P1.jar</source>
+            <outputDirectory>/container/system/org/apache/camel/karaf/camel-karaf-commands/2.10.4.P1/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
     </files>
