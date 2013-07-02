@@ -45,7 +45,6 @@ public class TalendEndpoint extends DefaultEndpoint {
 
     private String clazz;
     private String context;
-    private TalendJob jobInstance;
     private Method setExchangeMethod;
 
 
@@ -54,12 +53,7 @@ public class TalendEndpoint extends DefaultEndpoint {
         this.setClazz(clazz);
     }
 
-    public TalendEndpoint(String endpointUri) {
-        super(endpointUri);
-    }
-
     public Producer createProducer() throws Exception {
-        instantiateJob();
         return new TalendProducer(this);
     }
 
@@ -71,31 +65,8 @@ public class TalendEndpoint extends DefaultEndpoint {
         return true;
     }
 
-    protected void instantiateJob() throws ClassNotFoundException, SecurityException, NoSuchMethodException {
-        if (jobInstance == null) {
-            Class<?> jobType = this.getCamelContext().getClassResolver().resolveMandatoryClass(clazz);
-            TalendESBJobFactory talendESBJobFactory = Activator.getJobService(TalendESBJobFactory.class, jobType.getSimpleName());
-            if (null != talendESBJobFactory) {
-                jobInstance = talendESBJobFactory.newTalendESBJob();
-            } else {
-                jobInstance = TalendJob.class.cast(getCamelContext().getInjector().newInstance(jobType));
-            }
-            try{
-                setExchangeMethod = jobType.getMethod("setExchange", new Class[]{Exchange.class});
-            }catch (NoSuchMethodException e) {
-                LOG.debug("No setExchange(exchange) method found in Job, the message data will be ignored");
-                setExchangeMethod = null;
-            }
-        }
-        
-    }
-
     public final void setClazz(String clazz) {
         this.clazz = clazz;
-    }
-
-    public String getClazz() {
-        return clazz;
     }
 
     public void setContext(String context) {
@@ -106,9 +77,28 @@ public class TalendEndpoint extends DefaultEndpoint {
         return context;
     }
 
-    public TalendJob getJobInstance() {
-        return jobInstance;
-    }
+	public TalendJob getJobInstance() throws ClassNotFoundException,
+			SecurityException, NoSuchMethodException {
+		TalendJob jobInstance;
+		Class<?> jobType = this.getCamelContext().getClassResolver()
+				.resolveMandatoryClass(clazz);
+		TalendESBJobFactory talendESBJobFactory = Activator.getJobService(
+				TalendESBJobFactory.class, jobType.getSimpleName());
+		if (null != talendESBJobFactory) {
+			jobInstance = talendESBJobFactory.newTalendESBJob();
+		} else {
+			jobInstance = TalendJob.class.cast(getCamelContext().getInjector()
+					.newInstance(jobType));
+		}
+		try {
+			setExchangeMethod = jobType.getMethod("setExchange",
+					new Class[] { Exchange.class });
+		} catch (NoSuchMethodException e) {
+			LOG.debug("No setExchange(exchange) method found in Job, the message data will be ignored");
+			setExchangeMethod = null;
+		}
+		return jobInstance;
+	}
 
     public Method getSetExchangeMethod() {
         return setExchangeMethod;
