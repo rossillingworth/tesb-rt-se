@@ -508,6 +508,12 @@
             <outputDirectory>/container/system/org/apache/camel/karaf/camel-karaf-commands/2.10.4.P1/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
+        <!-- workaround for pax-url-classpath bundle (TESB-10185) -->
+        <file>
+            <source>${basedir}/target/dependencies/pax-url-classpath-1.2.8.jar</source>
+            <outputDirectory>/container/system/org/ops4j/pax/url/pax-url-classpath/1.2.8/</outputDirectory>
+            <fileMode>0644</fileMode>
+        </file>
     </files>
 
     <dependencySets>

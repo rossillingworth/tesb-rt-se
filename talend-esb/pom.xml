@@ -45,6 +45,13 @@
 			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>
+		<!-- workaround for pax-url-classpath bundle (TESB-10185) -->
+        <dependency>
+            <groupId>org.ops4j.pax.url</groupId>
+            <artifactId>pax-url-classpath</artifactId>
+            <version>1.2.8</version>
+            <type>jar</type>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -295,6 +302,14 @@
                                     <version>2.10.4.P1</version>
                                     <type>jar</type>
                                     <outputDirectory>target/dependencies</outputDirectory>
+                                </artifactItem>
+                                <!-- workaround for pax-url-classpath bundle (TESB-10185) -->
+                                <artifactItem>
+                                     <groupId>org.ops4j.pax.url</groupId>
+                                     <artifactId>pax-url-classpath</artifactId>
+                                     <version>1.2.8</version>
+                                     <type>jar</type>
+                                     <outputDirectory>target/dependencies</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
 						</configuration>
