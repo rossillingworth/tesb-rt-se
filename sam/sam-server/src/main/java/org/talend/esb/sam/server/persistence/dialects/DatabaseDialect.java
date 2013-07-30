@@ -31,6 +31,12 @@ public interface DatabaseDialect {
     String SUBSTITUTION_STRING = "%%FILTER%%";
 
     /**
+     * get the name of the dialect
+     * @return
+     */
+    String getName();
+
+    /**
      * Returns {@link DataFieldMaxValueIncrementer} for specific database.
      *
      * @return the incrementer
@@ -44,5 +50,12 @@ public interface DatabaseDialect {
      * @return the data query
      */
     String getDataQuery(QueryFilter filter);
+
+    /**
+     * Should return a count query.
+     *
+     * @return the count query string with {@link #SUBSTITUTION_STRING} placeholder for where clause.
+     */
+    String getCountQuery();
 
 }

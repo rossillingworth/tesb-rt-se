@@ -28,16 +28,15 @@ package org.talend.esb.sam.server.persistence.dialects;
 public class DB2Dialect extends AbstractDatabaseDialect {
 
     private static final String QUERY =
-        "select MI_FLOW_ID, EI_TIMESTAMP, EI_EVENT_TYPE, MI_PORT_TYPE, MI_OPERATION_NAME, " +
-        "MI_TRANSPORT_TYPE, ORIG_HOSTNAME, ORIG_IP from " +
-        "( " +
-        "select EVENTS.MI_FLOW_ID, EI_TIMESTAMP, EI_EVENT_TYPE, MI_PORT_TYPE, MI_OPERATION_NAME, " +
-        "MI_TRANSPORT_TYPE, ORIG_HOSTNAME,  ORIG_IP, ROW_NUMBER() OVER() AS RN " +
-        "from (select MI_FLOW_ID from EVENTS WHERE (MI_FLOW_ID is not null) %%FILTER%% group by MI_FLOW_ID order by MAX(EI_TIMESTAMP) DESC) as SUBQ " +
-        "LEFT JOIN EVENTS ON SUBQ.MI_FLOW_ID = EVENTS.MI_FLOW_ID " +
-        "order by EI_TIMESTAMP DESC " +
-        ") as T " +
-        "where RN between :offset and :offset + :limit + 1";
+       "SELECT MI_FLOW_ID, EI_TIMESTAMP, EI_EVENT_TYPE, MI_PORT_TYPE, MI_OPERATION_NAME, MI_TRANSPORT_TYPE, ORIG_HOSTNAME,  ORIG_IP " + 
+       "FROM EVENTS " +
+       "WHERE MI_FLOW_ID IN " +
+    	  "(SELECT MI_FLOW_ID FROM " +
+    	     "(SELECT MI_FLOW_ID, MAX(EI_TIMESTAMP) AS MTSTAMP FROM EVENTS " + 
+    	     "WHERE (MI_FLOW_ID IS NOT NULL) %%FILTER%% GROUP BY MI_FLOW_ID " +
+    	     "ORDER BY MAX(EI_TIMESTAMP) DESC LIMIT (%%OFFSET%% + %%LIMIT%%)) " +
+          "ORDER BY MTSTAMP LIMIT %%LIMIT%%) " +
+       "ORDER BY EI_TIMESTAMP DESC";  
     
     /* (non-Javadoc)
      * @see org.talend.esb.sam.server.persistence.dialects.AbstractDatabaseDialect#getQuery()
@@ -46,5 +45,10 @@ public class DB2Dialect extends AbstractDatabaseDialect {
     String getQuery() {
         return QUERY;
     }
+
+	@Override
+	public String getName() {
+		return "DB2Dialect";
+	}
 
 }

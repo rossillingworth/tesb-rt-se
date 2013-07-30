@@ -11,9 +11,6 @@ import org.talend.esb.sam.server.ui.CriteriaAdapter;
 
 public class SAMProviderImpl extends SimpleJdbcDaoSupport implements SAMProvider {
 
-    private static final String COUNT_QUERY = "select count(distinct MI_FLOW_ID) from EVENTS "
-            + DatabaseDialect.SUBSTITUTION_STRING;
-
     private static final String SELECT_FLOW_QUERY = "select "
             + "EVENTS.ID, EI_TIMESTAMP, EI_EVENT_TYPE, ORIG_CUSTOM_ID, ORIG_PROCESS_ID, "
             + "ORIG_HOSTNAME, ORIG_IP, ORIG_PRINCIPAL, MI_PORT_TYPE, MI_OPERATION_NAME, "
@@ -63,14 +60,22 @@ public class SAMProviderImpl extends SimpleJdbcDaoSupport implements SAMProvider
     public FlowCollection getFlows(CriteriaAdapter criteria) {
         FlowCollection flowCollection = new FlowCollection();
         final String whereClause = criteria.getWhereClause();
-        final String countQuery = COUNT_QUERY.replaceAll(DatabaseDialect.SUBSTITUTION_STRING,
-                (whereClause != null && whereClause.length() > 0) ? " WHERE " + whereClause : "");
+        final String countQuery = dialect.getCountQuery().replaceAll(DatabaseDialect.SUBSTITUTION_STRING,
+                (whereClause != null && whereClause.length() > 0) ? " AND " + whereClause : "");
         int rowCount = getSimpleJdbcTemplate().queryForInt(countQuery, criteria);
         int offset = Integer.parseInt(criteria.getValue("offset").toString());
+        int limit = Integer.parseInt(criteria.getValue("limit").toString());
+        
         List<Flow> flows = null;
 
         if (offset < rowCount) {
             String dataQuery = dialect.getDataQuery(criteria);
+                       
+            if ((rowCount - offset) < limit) limit = rowCount - offset;
+            String soffset = String.valueOf(offset); 
+            String slimit =  String.valueOf(limit);
+            dataQuery = dataQuery.replaceAll(SUBSTITUTION_STRING_LIMIT, slimit).replaceAll(SUBSTITUTION_STRING_OFFSET, soffset);
+            
             flows = getSimpleJdbcTemplate().query(dataQuery, flowMapper, criteria);
         }
         if(flows == null) flows = new ArrayList<Flow>();
