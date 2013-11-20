@@ -27,10 +27,10 @@ import java.util.logging.Logger;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.endpoint.ConduitSelectorHolder;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.feature.AbstractFeature;
 import org.apache.cxf.interceptor.InterceptorProvider;
-import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.talend.esb.servicelocator.client.SLPropertiesImpl;
 import org.talend.esb.servicelocator.client.SLPropertiesMatcher;
 import org.talend.esb.servicelocator.cxf.internal.ServiceLocatorManager;
@@ -83,8 +83,8 @@ public class LocatorFeature extends AbstractFeature {
 
     @Override
     public void initialize(InterceptorProvider interceptorProvider, Bus bus) {
-        if (interceptorProvider instanceof ClientConfiguration) {
-            initialize((ClientConfiguration) interceptorProvider, bus);
+        if (interceptorProvider instanceof ConduitSelectorHolder) {
+            initialize((ConduitSelectorHolder) interceptorProvider, bus);
         } else {
             if (LOG.isLoggable(Level.WARNING)) {
                 LOG.log(Level.WARNING,
@@ -94,14 +94,14 @@ public class LocatorFeature extends AbstractFeature {
         }
     }
 
-    public void initialize(ClientConfiguration clientConf, Bus bus) {
+    void initialize(ConduitSelectorHolder conduitSelectorHolder, Bus bus) {
         if (LOG.isLoggable(Level.FINE)) {
             LOG.log(Level.FINE, "Initializing locator feature for bus " + bus + " and client configuration"
-                    + clientConf);
+                    + conduitSelectorHolder);
         }
 
         ServiceLocatorManager slm = bus.getExtension(ServiceLocatorManager.class);
-        slm.enableClient(clientConf, slPropsMatcher, selectionStrategy);
+        slm.enableClient(conduitSelectorHolder, slPropsMatcher, selectionStrategy);
     }
 
     protected ServiceLocatorManager getLocatorManager(Bus bus) {
