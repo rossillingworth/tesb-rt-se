@@ -69,14 +69,17 @@ fi
 
 echo "Using config: $ZOOCFG"
 
-ZOOPIDFILE=$(grep dataDir "$ZOOCFG" | grep -v '#' | sed -e 's/.*=//')/zookeeper_server.pid
+ZOOPIDFOLDER=$(grep dataDir "$ZOOCFG" | grep -v '#' | sed -e 's/.*=//')
+ZOOPIDFILE=$ZOOPIDFOLDER/zookeeper_server.pid
+
 
 case $1 in
 start)
     echo  "Starting zookeeper ... "
+    mkdir -p $ZOOPIDFOLDER
     java  "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \
     -cp "$CLASSPATH" $JVMFLAGS $ZOOMAIN "$ZOOCFG" &
-    /bin/echo -n $! > "$ZOOPIDFILE"
+    /bin/echo $! > "$ZOOPIDFILE"
     echo STARTED
     ;;
 stop)
