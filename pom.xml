@@ -91,11 +91,11 @@
 
     <properties>
         <packages.version>${project.version}</packages.version>
-        <cxf.version>2.7.5</cxf.version>
-        <camel.version>2.10.4</camel.version>
+        <cxf.version>2.7.7</cxf.version>
+        <camel.version>2.10.7</camel.version>
         <activemq.version>5.7.0</activemq.version>
         <spring.version>3.0.7.RELEASE</spring.version>
-        <karaf.version>2.3.1</karaf.version>
+        <karaf.version>2.3.3</karaf.version>
         <zookeeper.version>3.3.6</zookeeper.version>
         <derby.version>10.8.1.2</derby.version>
         <slf4j.version>1.7.5</slf4j.version>
