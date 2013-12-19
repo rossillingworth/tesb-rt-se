@@ -126,6 +126,8 @@
         <cxf.checkstyle.extension />
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hyperic.version>4.6.6</hyperic.version>
+		<commons.logging.version>1.0.4</commons.logging.version>	
     </properties>
 
     <modules>

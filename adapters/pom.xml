@@ -23,7 +23,83 @@
 		<version>5.3.2-SNAPSHOT</version>
 	</parent>
 
+		<modules>
+		<module>hyperic/tesb-hq-plugins-common</module>
+		<module>hyperic/camel-plugin</module>
+		<module>hyperic/cxf-plugin</module>
+		<module>hyperic/activemq-plugin</module>
+		<module>hyperic/trun-plugin</module>
+<!-- 		<module>tesb-adapters</module>  -->
+	</modules>
+
+	<properties>
+		<maven.compiler.ver>2.5.1</maven.compiler.ver>
+<!-- 	<maven.source.ver>2.2.1</maven.source.ver>   -->
+		<maven.jar.ver>2.4</maven.jar.ver>
+		<maven.resource.ver>2.5</maven.resource.ver>
+		<maven.shade.ver>2.1</maven.shade.ver>
+		<maven.assembly.ver>2.3</maven.assembly.ver>
+		<junit.ver>4.11</junit.ver>
+	</properties>
+
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<licenseName>apache_v2</licenseName>
+					<licenseFile>${project.build.directory}/LICENSE.txt</licenseFile>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>update-project-license</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											license-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.0,)
+										</versionRange>
+										<goals>
+											<goal>
+												update-project-license
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
