@@ -433,16 +433,6 @@
             <outputDirectory>/add-ons/adapters/hyperic_plugins</outputDirectory>
    			<destName>cxf-plugin.jar</destName>
         </file>
-   		<file>
-   			<source>${basedir}/../adapters/hyperic/activemq-plugin/target/activemq-plugin-${project.version}.jar</source>
-   			<outputDirectory>/add-ons/adapters/hyperic_plugins</outputDirectory>
-   			<destName>activemq-plugin.jar</destName>
-   		</file>
-   		<file>
-   			<source>${basedir}/../adapters/hyperic/trun-plugin/target/trun-plugin-${project.version}.jar</source>
-   			<outputDirectory>/add-ons/adapters/hyperic_plugins</outputDirectory>
-   			<destName>trun-plugin.jar</destName>
-   		</file>
 
         <file>
             <source>${basedir}/src/main/bin/trun.bat</source>
