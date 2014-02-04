@@ -128,6 +128,7 @@ public class RuntimeESBConsumer implements ESBConsumer {
             clientFactory.setWsdlURL(wsdlURL);
         }
         clientFactory.setServiceClass(this.getClass());
+        clientFactory.setDataBinding(new SourceDataBinding());
 
         //for TESB-9006, create new bus when registry enabled but no wsdl-client/policy-client
         //extension set on the old bus. (used to instead the action of refresh job controller bundle.
@@ -349,8 +350,6 @@ public class RuntimeESBConsumer implements ESBConsumer {
             }
 
             final Service service = client.getEndpoint().getService();
-            service.setDataBinding(new SourceDataBinding());
-
             final ServiceInfo si = service.getServiceInfos().get(0);
             ServiceHelper.addOperation(si, operationName, isRequestResponse, soapAction);
         }

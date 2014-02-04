@@ -22,7 +22,6 @@ package org.talend.esb.job.controller.internal;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -128,9 +127,7 @@ public class GenericServiceProviderImpl implements GenericServiceProvider,
         	try {
 				source = DOM4JMarshaller
 				        .documentToSource((org.dom4j.Document) result);
-			} catch (UnsupportedEncodingException e) {
-				throw new RuntimeException(e);
-			} catch (IOException e) {
+			} catch (org.dom4j.DocumentException e) {
 				throw new RuntimeException(e);
 			}
         } else if (result instanceof RuntimeException) {
