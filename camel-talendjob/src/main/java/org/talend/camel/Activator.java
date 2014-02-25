@@ -45,16 +45,13 @@ public class Activator implements BundleActivator {
             	String clazzName = clazz.getName();
             	
             	/*
-            	
             	 * read old version style first
-            	
             	 * see https://jira.talendforge.org/browse/TESB-12909
-            	
             	 */
                 ServiceReference[] serviceReferences = context.getServiceReferences(clazzName, "(&(name=" + jobType.getSimpleName() + ")(type=job))");
                 
                 //if no old version style, then read fashion style
-                if( null == serviceReferences ){
+                if(null == serviceReferences ){
                 	serviceReferences = context.getServiceReferences(clazzName, "(&(name=" + jobType.getName() + ")(type=job))");
                 }
                 
