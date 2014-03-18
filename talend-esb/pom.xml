@@ -654,12 +654,6 @@
                                         token="xbean-blueprint/3.11.1"
                                         value="xbean-blueprint/${xbean.version}"/>
                                 </replace>
-                                <replace file="target/dependencies/activemq-karaf-${activemq.version}-features.xml">
-                                    <!-- patch for xbean-blueprint version (TESB-9304) -->
-                                    <replacefilter
-                                        token="xbean-blueprint/3.11.1"
-                                        value="xbean-blueprint/${xbean.version}"/>
-                                </replace>
                             </target>
                         </configuration>
                         <goals>

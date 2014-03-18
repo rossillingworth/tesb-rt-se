@@ -530,11 +530,6 @@
             <outputDirectory>/container/system/org/apache/servicemix/bundles/org.apache.servicemix.bundles.opensaml/${servicemix.bundles.opensaml.version}/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
-        <file>
-            <source>${basedir}/target/dependencies/pax-url-classpath-${pax-url-classpath.version}.jar</source>
-            <outputDirectory>/container/system/org/ops4j/pax/url/pax-url-classpath/${pax-url-classpath.version}/</outputDirectory>
-            <fileMode>0644</fileMode>
-        </file>
         <!-- workaround ActiveMQ features descriptor -->
         <file>
             <source>${basedir}/target/dependencies/activemq-karaf-${activemq.version}-features.xml</source>
