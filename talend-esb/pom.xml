@@ -41,6 +41,7 @@
         <xbean.version>3.14</xbean.version>
         <xerces.version>2.11.0_1</xerces.version>
         <servicemix.bundles.opensaml.version>2.6.1_1</servicemix.bundles.opensaml.version>
+        <joda-time.version>2.2</joda-time.version>
 	</properties>
 
 	<dependencies>
@@ -398,6 +399,14 @@
                                      <type>jar</type>
                                      <outputDirectory>target/dependencies</outputDirectory>
                                 </artifactItem>
+                                <!-- workaround for joda-time version -->
+                                <artifactItem>
+                                     <groupId>joda-time</groupId>
+                                     <artifactId>joda-time</artifactId>
+                                     <version>${joda-time.version}</version>
+                                     <type>jar</type>
+                                     <outputDirectory>target/dependencies</outputDirectory>
+                                </artifactItem>
                             </artifactItems>
 						</configuration>
 					</execution>
@@ -660,19 +669,6 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
-                    <!-- <execution>
-                        <id>remove-extra-features-files</id>
-                        <phase>process-resources</phase>
-                        <configuration>
-                            <target>
-                                <delete file="target/features-repo/org/apache/cxf/karaf/apache-cxf/2.7.10/apache-cxf-2.7.10-features.xml" >
-                                </delete>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>  -->
                 </executions>
 			</plugin>
 			<plugin>
