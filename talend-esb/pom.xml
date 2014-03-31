@@ -179,6 +179,7 @@
 						        <feature>camel-http</feature>
 						        <feature>camel-http4</feature>
 						        <feature>camel-ibatis</feature>
+						        <feature>camel-ical</feature>
 						        <feature>camel-irc</feature>
 						        <feature>camel-jackson</feature>
 						        <feature>camel-jasypt</feature>
@@ -200,6 +201,7 @@
 						        <feature>camel-kestrel</feature>
                                 <feature>camel-krati</feature>
 						        <feature>camel-ldap</feature>
+						        <feature>camel-leveldb</feature>
 						        <feature>camel-lucene</feature>
 						        <feature>camel-mail</feature>
 						        <feature>camel-mina</feature>
