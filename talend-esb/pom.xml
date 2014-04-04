@@ -117,6 +117,7 @@
 								<feature>jetty</feature>
 								<feature>webconsole</feature>
                                 <feature>wrapper</feature>
+                                <feature>transaction</feature>
                                 <!-- ActiveMQ Features -->
                                 <feature>activemq</feature>
                                 <feature>activemq-blueprint</feature>
