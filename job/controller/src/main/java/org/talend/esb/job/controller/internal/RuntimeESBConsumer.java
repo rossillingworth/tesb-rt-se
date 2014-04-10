@@ -36,7 +36,6 @@ import javax.xml.ws.soap.SOAPFaultException;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusException;
-import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.apache.cxf.configuration.security.AuthorizationPolicy;
 import org.apache.cxf.databinding.source.SourceDataBinding;
 import org.apache.cxf.endpoint.Client;
@@ -143,13 +142,6 @@ public class RuntimeESBConsumer implements ESBConsumer {
         }
         clientFactory.setServiceClass(this.getClass());
         clientFactory.setDataBinding(new SourceDataBinding());
-
-        //for TESB-9006, create new bus when registry enabled but no wsdl-client/policy-client
-        //extension set on the old bus. (used to instead the action of refresh job controller bundle.
-        if (useServiceRegistry && !hasRegistryClientExtension(bus)) {
-            SpringBusFactory sbf = new SpringBusFactory();
-            bus = sbf.createBus();
-        }
 
         clientFactory.setBus(bus);
         final List<Feature> features = new ArrayList<Feature>();
@@ -361,12 +353,7 @@ public class RuntimeESBConsumer implements ESBConsumer {
         }
         return client;
     }
-
-    private boolean hasRegistryClientExtension(Bus bus) {
-        return (bus.hasExtensionByName("org.talend.esb.registry.client.wsdl.RegistryFactoryBeanListener")
-            || bus.hasExtensionByName("org.talend.esb.registry.client.policy.RegistryFactoryBeanListener"));
-    }
-
+    
     private static Object processFileURI(String fileURI) {
         if (fileURI.startsWith("file:")) {
             try {
