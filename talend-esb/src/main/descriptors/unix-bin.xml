@@ -363,10 +363,6 @@
                 <!-- patch for xbean-blueprint version (TESB-9304) -->
                 <exclude>org/apache/activemq/activemq-karaf/${activemq.version}/activemq-karaf-${activemq.version}-features.xml</exclude>
                 <exclude>org/apache/xbean/xbean-blueprint/3.11.1/**</exclude>
-                <!-- patch for opensaml version -->
-                <exclude>org/apache/servicemix/bundles/org.apache.servicemix.bundles.opensaml/2.5.3_3/**</exclude>
-                <!-- patch for joda-time version -->
-                <exclude>joda-time/joda-time/2.1/**</exclude>
             </excludes>
         </fileSet>
 
@@ -525,18 +521,6 @@
         <file>
             <source>${basedir}/target/dependencies/pax-url-classpath-${pax-url-classpath.version}.jar</source>
             <outputDirectory>/container/system/org/ops4j/pax/url/pax-url-classpath/${pax-url-classpath.version}/</outputDirectory>
-            <fileMode>0644</fileMode>
-        </file>
-        <!-- workaround for opensaml bundle -->
-        <file>
-            <source>${basedir}/target/dependencies/org.apache.servicemix.bundles.opensaml-${servicemix.bundles.opensaml.version}.jar</source>
-            <outputDirectory>/container/system/org/apache/servicemix/bundles/org.apache.servicemix.bundles.opensaml/${servicemix.bundles.opensaml.version}/</outputDirectory>
-            <fileMode>0644</fileMode>
-        </file>
-        <!-- workaround for joda-time jar -->
-        <file>
-            <source>${basedir}/target/dependencies/joda-time-${joda-time.version}.jar</source>
-            <outputDirectory>/container/system/joda-time/joda-time/${joda-time.version}/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
         <!-- workaround ActiveMQ features descriptor -->

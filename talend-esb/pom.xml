@@ -37,14 +37,12 @@
         <activator.version>2.4.0</activator.version>
         <jclouds.version>1.6.2-incubating</jclouds.version>
         <pax-url-classpath.version>1.2.8</pax-url-classpath.version>
-        <wss4j.version>1.6.14</wss4j.version>
+        <wss4j.version>1.6.15</wss4j.version>
         <xalan.version>2.7.1_7</xalan.version>
         <xbean.version>3.14</xbean.version>
         <xerces.version>2.11.0_1</xerces.version>
-        <servicemix.bundles.opensaml.version>2.6.1_1</servicemix.bundles.opensaml.version>
-        <joda-time.version>2.2</joda-time.version>
-	<log4j.version>1.2.17</log4j.version>
-        </properties>
+        <log4j.version>1.2.17</log4j.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -403,22 +401,6 @@
                                     <version>${activator.version}</version>
                                     <type>jar</type>
                                     <outputDirectory>target/dependencies</outputDirectory>
-                                </artifactItem>
-                                <!-- workaround for opensaml version -->
-                                <artifactItem>
-                                     <groupId>org.apache.servicemix.bundles</groupId>
-                                     <artifactId>org.apache.servicemix.bundles.opensaml</artifactId>
-                                     <version>${servicemix.bundles.opensaml.version}</version>
-                                     <type>jar</type>
-                                     <outputDirectory>target/dependencies</outputDirectory>
-                                </artifactItem>
-                                <!-- workaround for joda-time version -->
-                                <artifactItem>
-                                     <groupId>joda-time</groupId>
-                                     <artifactId>joda-time</artifactId>
-                                     <version>${joda-time.version}</version>
-                                     <type>jar</type>
-                                     <outputDirectory>target/dependencies</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
 						</configuration>
