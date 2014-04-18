@@ -115,12 +115,12 @@ public class RuntimeESBConsumer implements ESBConsumer {
             protected Endpoint createEndpoint() throws BusException,
                     EndpointException {
                 final Endpoint endpoint = super.createEndpoint();
-                // set portType = serviceName
-                InterfaceInfo ii = endpoint.getService().getServiceInfos()
-                        .get(0).getInterface();
-                ii.setName(serviceName);
 
                 final ServiceInfo si = endpoint.getService().getServiceInfos().get(0);
+                // set portType = serviceName
+                InterfaceInfo ii = si.getInterface();
+                ii.setName(serviceName);
+
                 ServiceHelper.addOperation(si, operationName, isRequestResponse, soapAction);
 
                 return endpoint;
