@@ -79,7 +79,7 @@ public class RuntimeESBConsumer implements ESBConsumer {
     private static final String CONSUMER_SIGNATURE_PASSWORD =
              "ws-security.signature.password";
 
-    private final String operationName;
+    private final QName operationName;
     private final EventFeature samFeature;
     private final List<Header> soapHeaders;
     private AuthorizationPolicy authorizationPolicy;
@@ -97,7 +97,7 @@ public class RuntimeESBConsumer implements ESBConsumer {
 
     RuntimeESBConsumer(final QName serviceName,
             final QName portName,
-            final String operationName,
+            final QName operationName,
             String publishedEndpointUrl,
             String wsdlURL,
             final boolean isRequestResponse,
@@ -125,7 +125,7 @@ public class RuntimeESBConsumer implements ESBConsumer {
             }
             @Override
             public QName getOperationName(InterfaceInfo service, Method method) {
-                return new QName(serviceName.getNamespaceURI(), operationName);
+                return operationName;
             }
             @Override
             public Boolean isWrapped() {
