@@ -143,7 +143,7 @@
         <module>features</module>
         <module>sts</module>
         <module>camel-talendjob</module>
-        <module>adapters</module>
+        <!-- module>adapters</module -->
         <module>callcontext-store</module>
     </modules>
 
