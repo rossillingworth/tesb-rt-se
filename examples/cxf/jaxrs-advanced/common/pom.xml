@@ -78,10 +78,12 @@
               <proc>only</proc>
               <compilerArgument>-Aopenjpa.metamodel=true</compilerArgument>
               <generatedSourcesDirectory>${basedir}/target/generated-sources/src/main/java</generatedSourcesDirectory>
+              <includes>
+                <include>common/advanced/*.java</include>
+              </includes>
             </configuration>
           </execution>
           <execution>
-            <id>compile</id>
             <phase>compile</phase>
             <goals>
               <goal>compile</goal>
