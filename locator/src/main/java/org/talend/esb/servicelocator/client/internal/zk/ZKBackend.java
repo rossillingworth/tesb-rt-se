@@ -367,7 +367,7 @@ public class ZKBackend implements ServiceLocatorBackend {
         }
     }
 
-    private ServiceLocatorException locatorException(Exception e) {
+    private static ServiceLocatorException locatorException(Exception e) {
         if (LOG.isLoggable(Level.FINE)) {
             LOG.log(Level.FINE, "The service locator server signaled an error",
                     e);
