@@ -35,13 +35,11 @@
         <zookeeper.package.version>${zookeeper.version}</zookeeper.package.version>
         <jclouds.version>1.7.2</jclouds.version>
         <pax-url-classpath.version>1.2.8</pax-url-classpath.version>
-        <wss4j.version>1.6.15</wss4j.version>
+        <wss4j.version>2.0.2</wss4j.version>
         <xalan.version>2.7.1_7</xalan.version>
         <xbean.version>3.14</xbean.version>
         <xerces.version>2.11.0_1</xerces.version>
         <log4j.version>1.2.17</log4j.version>
-        <saaj-impl.version>1.3.23_2</saaj-impl.version>
-        <stax-ex.version>1.7.4</stax-ex.version>
 	</properties>
 
 	<dependencies>
@@ -422,22 +420,6 @@
                                     <outputDirectory>target/dependencies</outputDirectory>
                                     <destFileName>activemq-karaf-${activemq.version}-features-core.xml</destFileName>
                                 </artifactItem>
-                                <!-- workaround for saaj-impl bundle version (TESB-13955) -->
-                                <artifactItem>
-                                    <groupId>org.apache.servicemix.bundles</groupId>
-                                    <artifactId>org.apache.servicemix.bundles.saaj-impl</artifactId>
-                                    <version>${saaj-impl.version}</version>
-                                    <type>jar</type>
-                                    <outputDirectory>target/dependencies</outputDirectory>
-                                    <destFileName>org.apache.servicemix.bundles.saaj-impl-${saaj-impl.version}.jar</destFileName>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jvnet.staxex</groupId>
-                                    <artifactId>stax-ex</artifactId>
-                                    <version>${stax-ex.version}</version>
-                                    <type>jar</type>
-                                    <outputDirectory>target/dependencies</outputDirectory>
-                                </artifactItem>
                                 <!-- Karaf 2.3.9 patch -->
                                 <artifactItem>
                                     <groupId>org.apache.karaf.assemblies.features</groupId>
@@ -715,17 +697,12 @@
                                 <replace file="target/dependencies/apache-cxf-${cxf.version}-features.xml">
                                     <!-- patch for xalan and xerces version -->
                                     <replacefilter>
-                                        <replacetoken>&lt;bundle start-level='30' dependency="true"&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xalan/2.7.1_7&lt;/bundle&gt;</replacetoken> 
+                                        <replacetoken>&lt;bundle start-level="30" dependency="true"&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xalan/2.7.1_7&lt;/bundle&gt;</replacetoken> 
                                         <replacevalue></replacevalue>
                                     </replacefilter>
                                     <replacefilter>
-                                        <replacetoken>&lt;bundle start-level='30' dependency="true"&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xerces/2.11.0_1&lt;/bundle&gt;</replacetoken> 
+                                        <replacetoken>&lt;bundle start-level="30" dependency="true"&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xerces/2.11.0_1&lt;/bundle&gt;</replacetoken> 
                                         <replacevalue></replacevalue>
-                                    </replacefilter>
-                                    <replacefilter>
-                                        <replacetoken>&lt;bundle start-level='25'&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.saaj-impl/1.3.23_1&lt;/bundle&gt;</replacetoken> 
-                                        <replacevalue>&lt;bundle start-level='25'&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.saaj-impl/${saaj-impl.version}&lt;/bundle&gt;
-        &lt;bundle start-level='25'&gt;mvn:org.jvnet.staxex/stax-ex/${stax-ex.version}&lt;/bundle&gt;</replacevalue>
                                     </replacefilter>
                                 </replace>
                                 <replace file="target/dependencies/activemq-karaf-${activemq.version}-features-core.xml">

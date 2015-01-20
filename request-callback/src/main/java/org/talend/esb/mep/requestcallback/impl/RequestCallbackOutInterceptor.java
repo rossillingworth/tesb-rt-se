@@ -21,7 +21,7 @@ import org.apache.cxf.ws.addressing.EndpointReferenceType;
 import org.apache.cxf.ws.addressing.JAXWSAConstants;
 import org.apache.cxf.ws.addressing.MAPAggregator;
 import org.apache.cxf.ws.addressing.RelatesToType;
-import org.apache.cxf.ws.addressing.impl.AddressingPropertiesImpl;
+import org.apache.cxf.ws.addressing.impl.AddressingProperties;
 import org.talend.esb.mep.requestcallback.feature.CallContext;
 import org.talend.esb.mep.requestcallback.feature.RequestCallbackFeature;
 import org.talend.esb.sam.agent.message.FlowIdHelper;

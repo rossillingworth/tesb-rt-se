@@ -18,7 +18,7 @@ import java.net.ConnectException;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.client.ClientException;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -104,7 +104,7 @@ public class AuxiliaryStorageClientRest<E> extends AbstractAuxiliaryStorageClien
             handleWebException(e);
         } catch (Exception e) {
             if (retry && (e instanceof ConnectException
-                    || e instanceof ClientException)) {
+                    || e instanceof ProcessingException)) {
                 if (null != client) {
                     client.reset();
                 }
@@ -139,7 +139,7 @@ public class AuxiliaryStorageClientRest<E> extends AbstractAuxiliaryStorageClien
             handleWebException(e);
         } catch (Exception e) {
             if (retry && (e instanceof ConnectException
-                    || e instanceof ClientException)) {
+                    || e instanceof ProcessingException)) {
                 if (null != client) {
                     client.reset();
                 }
@@ -173,7 +173,7 @@ public class AuxiliaryStorageClientRest<E> extends AbstractAuxiliaryStorageClien
            handleWebException(e);
        } catch (Exception e) {
            if (retry && (e instanceof ConnectException
-                   || e instanceof ClientException)) {
+                   || e instanceof ProcessingException)) {
                if (null != client) {
                    client.reset();
                }

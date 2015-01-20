@@ -21,11 +21,13 @@ package org.talend.esb.policy.schemavalidate.tests.policy;
 
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.esb.policy.schemavalidate.SchemaValidationPolicy;
 import org.talend.esb.policy.schemavalidate.SchemaValidationPolicy.ValidationType;
 
 
+@Ignore
 public class CustomSchemaPolicyTest extends AbstractPolicyTest{
 
     @Test

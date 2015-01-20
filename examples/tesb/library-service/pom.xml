@@ -30,8 +30,8 @@
     <properties>
         <use.service.registry>false</use.service.registry>
 
-        <cxf.version>2.7.12</cxf.version>
-        <cxf.xjc.version>2.6.1</cxf.xjc.version>
+        <cxf.version>3.0.3</cxf.version>
+        <cxf.xjc.version>3.0.3</cxf.xjc.version>
         <camel.version>2.13.2</camel.version>
         <spring.version>3.2.4.RELEASE</spring.version>
         <karaf.version>2.3.9</karaf.version>
