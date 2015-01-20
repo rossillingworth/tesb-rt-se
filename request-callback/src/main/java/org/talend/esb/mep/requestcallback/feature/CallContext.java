@@ -1,6 +1,8 @@
 package org.talend.esb.mep.requestcallback.feature;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +45,18 @@ import org.talend.esb.mep.requestcallback.impl.wsdl.CallbackDefaultServiceConfig
 
 public class CallContext implements Serializable {
 
+	public enum PolicyDistributionMode {
+		EXCHANGE, SERVICE
+	}
+
+	public static final String POLICY_DISTRIBUTION_MODE_CONFIG =
+			"org.talend.esb.policy.distribution.properties";
+	public static final String POLICY_DISTRIBUTION_MODE_PROPERTY =
+			"org.talend.esb.policy.distribution.mode";
+	public static final PolicyDistributionMode DEFAULT_POLICY_DISTRIBUTION_MODE =
+			PolicyDistributionMode.EXCHANGE;
+	public static final PolicyDistributionMode EFFECTIVE_POLICY_DISTRIBUTION_MODE =
+			effectivePolicyDistributionMode();
 	private static final Logger LOGGER = LogUtils.getL7dLogger(CallContext.class);
 	private static final String NULL_MEANS_ONEWAY = "jaxws.provider.interpretNullAsOneway";
 	private static final String CLASSPATH_URL_PREFIX = "classpath:";
@@ -237,16 +252,38 @@ public class CallContext implements Serializable {
 
 	public <T extends Source> Dispatch<T> createCallbackDispatch(
 			final Class<T> sourceClass, final Service.Mode mode,
-			final QName operation, final String soapAction, final URL wsdlLocationURL) {
-		final QName callbackPortTypeName = new QName(
-				portTypeName.getNamespaceURI(), portTypeName.getLocalPart() + "Consumer");
-		final QName callbackServiceName = new QName(
-				callbackPortTypeName.getNamespaceURI(), callbackPortTypeName.getLocalPart() + "Service");
-		final QName callbackPortName = new QName(
-				callbackPortTypeName.getNamespaceURI(), callbackPortTypeName.getLocalPart() + "Port");
-
+			final QName operation, final String soapAction,
+			final URL wsdlLocationURL, final String policyAlias) {
+		final URL wsdlURL;
+		final CallbackInfo callbackInfo;
+		if (wsdlLocationURL == null || wsdlLocationURL.equals(this.wsdlLocationURL)) {
+			wsdlURL = integrateCallbackSenderPolicyAlias(this.wsdlLocationURL, policyAlias);
+			callbackInfo = getCallbackInfo();
+		} else {
+			wsdlURL = integrateCallbackSenderPolicyAlias(wsdlLocationURL, policyAlias);
+			callbackInfo = new CallbackInfo(wsdlLocationURL);
+		}
+		final QName callbackPortTypeName;
+		final QName callbackServiceName;
+		final QName callbackPortName;
+		if (callbackInfo != null) {
+			callbackPortTypeName = validValue(callbackInfo.getCallbackPortTypeName(),
+					portTypeName.getNamespaceURI(), portTypeName.getLocalPart(), "Consumer");
+			callbackServiceName = validValue(callbackInfo.getCallbackServiceName(),
+					callbackPortTypeName.getNamespaceURI(),
+					callbackPortTypeName.getLocalPart(), "Service");
+			callbackPortName = validValue(callbackInfo.getCallbackPortName(),
+					callbackServiceName.getNamespaceURI(),
+					callbackPortTypeName.getLocalPart(), "Port");
+		} else {
+			callbackPortTypeName = new QName(portTypeName.getNamespaceURI(),
+					portTypeName.getLocalPart() + "Consumer");
+			callbackServiceName = new QName(callbackPortTypeName.getNamespaceURI(),
+					callbackPortTypeName.getLocalPart() + "Service");
+			callbackPortName = new QName(callbackPortTypeName.getNamespaceURI(),
+					callbackPortTypeName.getLocalPart() + "Port");
+		}
 		Service service = null;
-		final URL wsdlURL = wsdlLocationURL == null ? this.wsdlLocationURL : wsdlLocationURL;
 		if (wsdlURL != null) {
 			try {
 				service = Service.create(wsdlURL, callbackServiceName);
@@ -294,6 +331,13 @@ public class CallContext implements Serializable {
             requestContext.put(BindingProvider.SOAPACTION_URI_PROPERTY, soapAction);
         }
 		return dispatch;
+	}
+
+	public <T extends Source> Dispatch<T> createCallbackDispatch(
+			final Class<T> sourceClass, final Service.Mode mode,
+			final QName operation, final String soapAction, final URL wsdlLocationURL) {
+		return createCallbackDispatch(
+				sourceClass, mode, operation, soapAction, wsdlLocationURL, null);
 	}
 
 	public <T extends Source> Dispatch<T> createCallbackDispatch(
@@ -596,5 +640,74 @@ public class CallContext implements Serializable {
         return wsdlLocation.startsWith("file:/") || wsdlLocation.startsWith("http://")
                 || wsdlLocation.startsWith("https://")
                 || wsdlLocation.startsWith(CLASSPATH_URL_PREFIX);
+    }
+
+    private static QName validValue(QName value, String defaultNamespaceURI,
+    		String defaultLocalNameBase, String defaultSuffix) {
+    	if (value != null) {
+    		return value;
+    	}
+    	return new QName(defaultNamespaceURI, defaultLocalNameBase + defaultSuffix);
+    }
+
+    private static QName validValue(String localValue, String defaultNamespaceURI,
+    		String defaultLocalNameBase, String defaultSuffix) {
+    	if (localValue != null && localValue.length() > 0) {
+    		return new QName(defaultNamespaceURI, localValue);
+    	}
+    	return new QName(defaultNamespaceURI, defaultLocalNameBase + defaultSuffix);
+    }
+
+    private static URL integrateCallbackSenderPolicyAlias(URL wsdlURL, String alias) {
+    	if (EFFECTIVE_POLICY_DISTRIBUTION_MODE == PolicyDistributionMode.SERVICE) {
+    		return wsdlURL;
+    	}
+    	if (wsdlURL == null || alias == null || alias.length() == 0) {
+    		return wsdlURL;
+    	}
+    	final String query = wsdlURL.getQuery();
+    	if (query == null || query.length() == 0) {
+    		return wsdlURL;
+    	}
+    	if (query.indexOf("mergeWithPolicies=true") >= 0 &&
+    			query.indexOf("participant=consumer") >= 0 &&
+    			query.indexOf("consumerPolicyAlias=") < 0) {
+    		try {
+    			return new URL(wsdlURL.toExternalForm() + "&consumerPolicyAlias=" + alias);
+    		} catch (MalformedURLException e) {
+    			throw new IllegalArgumentException("Bad alias String: " + alias + ". ", e);
+    		}
+    	}
+    	return wsdlURL;
+    }
+
+    private static PolicyDistributionMode effectivePolicyDistributionMode() {
+    	final InputStream propertyStream =
+    			CallContext.class.getClassLoader().getResourceAsStream(
+    					POLICY_DISTRIBUTION_MODE_CONFIG);
+    	if (propertyStream == null) {
+    		return DEFAULT_POLICY_DISTRIBUTION_MODE;
+    	}
+    	final Properties props = new Properties();
+    	try {
+    		props.load(propertyStream);
+    	} catch (IOException e) {
+    		if (LOGGER.isLoggable(Level.FINER)) {
+    			LOGGER.log(Level.FINER, "Exception caught. ", e);
+    		}
+    		return DEFAULT_POLICY_DISTRIBUTION_MODE;
+    	}
+    	final String modeName = props.getProperty(
+    			POLICY_DISTRIBUTION_MODE_PROPERTY);
+    	if (modeName == null || modeName.length() == 0) {
+    		return DEFAULT_POLICY_DISTRIBUTION_MODE;
+    	}
+    	if ("exchange".equalsIgnoreCase(modeName)) {
+    		return PolicyDistributionMode.EXCHANGE;
+    	}
+    	if ("service".equalsIgnoreCase(modeName)) {
+    		return PolicyDistributionMode.SERVICE;
+    	}
+    	return DEFAULT_POLICY_DISTRIBUTION_MODE;
     }
 }
