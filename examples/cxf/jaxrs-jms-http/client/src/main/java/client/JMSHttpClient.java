@@ -25,6 +25,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.transport.jms.util.JMSUtil;
 
 import common.books.Book;
 
@@ -191,7 +192,7 @@ public final class JMSHttpClient {
 	    throws Exception {
 	    MessageProducer producer = session.createProducer(destination);
 	    
-	    Message message = JMSUtils.createAndSetPayload(
+	    Message message = JMSUtil.createAndSetPayload(
 	        writeBook(new Book("JMS OneWay", 125L)), session, "text");
 	    message.setStringProperty("org.apache.cxf.request.method", "PUT");
 	                
@@ -203,7 +204,7 @@ public final class JMSHttpClient {
 	    throws Exception {
 	    MessageProducer producer = session.createProducer(destination);
 	    
-	    Message message = JMSUtils.createAndSetPayload(writeBook(book), session, "text");
+	    Message message = JMSUtil.createAndSetPayload(writeBook(book), session, "text");
 	    message.setJMSReplyTo(replyTo);
 	    
 	    message.setStringProperty("org.apache.cxf.request.method", "POST");
@@ -214,16 +215,16 @@ public final class JMSHttpClient {
     
     
     private void checkBookInResponse(Session session, Destination replyToDestination) throws Exception {
-        MessageConsumer consumer = session.createConsumer(replyToDestination);
-        Message jmsMessage = consumer.receive(5000);
-        org.apache.cxf.message.Message cxfMessage = new org.apache.cxf.message.MessageImpl();
-        JMSUtils.retrieveAndSetPayload(cxfMessage, jmsMessage, null);
-        Reader reader = cxfMessage.getContent(Reader.class);
-        if (reader == null) {
-        	reader = new InputStreamReader(cxfMessage.getContent(InputStream.class), "UTF-8");
-        }
-        Book b = readBook(reader);
-        System.out.println(b.getId() + ":" + b.getName());
+//        MessageConsumer consumer = session.createConsumer(replyToDestination);
+//        Message jmsMessage = consumer.receive(5000);
+//        org.apache.cxf.message.Message cxfMessage = new org.apache.cxf.message.MessageImpl();
+//        JMSUtil.retrieveAndSetPayload(cxfMessage, jmsMessage, null);
+//        Reader reader = cxfMessage.getContent(Reader.class);
+//        if (reader == null) {
+//        	reader = new InputStreamReader(cxfMessage.getContent(InputStream.class), "UTF-8");
+//        }
+//        Book b = readBook(reader);
+//        System.out.println(b.getId() + ":" + b.getName());
     }
     
     private Context getContext() throws Exception {
