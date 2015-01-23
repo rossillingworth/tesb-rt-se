@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
@@ -48,9 +50,14 @@ public class XPathProcessor extends BareOutInterceptor {
 
 	private ByteArrayOutputStream buffer;
 	private XMLStreamWriter xmlWriter;
-
-	public XPathProcessor(Message message) {
+	private Message message;
+	private Assertion assertion;
+	
+	public XPathProcessor(Assertion assertion, Message message) {
+		
 		super();
+		this.message = message;
+		this.assertion=assertion;
 		buffer  = new ByteArrayOutputStream();
 		xmlWriter = StaxUtils.createXMLStreamWriter(buffer,
 				getEncoding(message));
@@ -121,7 +128,7 @@ public class XPathProcessor extends BareOutInterceptor {
 		return encoding;
 	}
 	
-	public String getCorrelationID(Assertion assertion, Message message) {
+	public String getCorrelationID() {
 
 		CorrelationIDAssertion cAssertion = null;
 		if(!(assertion instanceof CorrelationIDAssertion)){
@@ -144,10 +151,10 @@ public class XPathProcessor extends BareOutInterceptor {
 		
 		List<XpathNamespace> namespaces = cAssertion.getCorrelationNamespaces();
 
-		processJXpathParts(parts, namespaces, body);
+		Map<String, String> res = processJXpathParts(parts, namespaces, body);
 
-		return buildCorrelationIdFromXpathParts(parts,
-				cAssertion.getCorrelationName());
+		return buildCorrelationIdFromXpathParts(parts, 
+				cAssertion.getCorrelationName(), res);
 	}
 	
 	private Node getSoapBody(Message message) {
@@ -198,7 +205,7 @@ public class XPathProcessor extends BareOutInterceptor {
 	}
 	
 	private String buildCorrelationIdFromXpathParts(
-			final List<XpathPart> parts, final String cName) {
+			final List<XpathPart> parts, final String cName, final Map<String, String> partsValues) {
 
 		StringBuilder builder = new StringBuilder();
 
@@ -210,9 +217,9 @@ public class XPathProcessor extends BareOutInterceptor {
 		boolean firstPart = true;
 		for (XpathPart part : parts) {
 			String partName = part.getName();
-			String partValue = part.getValue();
+			String partValue = partsValues.get(part.getXpath());
 			
-			if(!part.isIgnore()){
+			if(partValue!=null){
 				if(!firstPart){
 					//Do not add part separator for first part
 					builder.append(CORRELATION_PART_SEPARATOR);
@@ -232,9 +239,10 @@ public class XPathProcessor extends BareOutInterceptor {
 		return builder.toString();
 	}
 	
-	private void processJXpathParts(List<XpathPart> parts, 
+	private Map<String, String> processJXpathParts(List<XpathPart> parts, 
 			List<XpathNamespace> namespaces,  Node body){
 		
+		Map<String, String> resultMap = new HashMap<String, String>();
 	
 		JXPathContext messageContext = JXPathContext.newContext(body);
 		
@@ -262,7 +270,8 @@ public class XPathProcessor extends BareOutInterceptor {
 			try {
 				Object val = messageContext.getValue(part.getXpath());
 				String result = (val==null)?null:val.toString();
-				part.setValue(val.toString());
+				resultMap.put(part.getXpath(), val.toString());
+
 				
 				if((result==null || result.isEmpty()) && !part.isOptional()){
 					throw new RuntimeException(
@@ -276,12 +285,12 @@ public class XPathProcessor extends BareOutInterceptor {
 							"Evaluation of XPATH expression" + "{ name: "
 									+ part.getName() + "; xpath: "
 									+ part.getXpath() + " } failed", ex);
-				}else{
-					part.setIgnore(true);
 				}
 
 			}
 		}
+		
+		return  resultMap;
 	}
 
 	private static void fixateStreams(List<?> list) {
