@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.namespace.NamespaceContext;
+import javax.activation.DataSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.jxpath.JXPathContext;
@@ -21,6 +22,7 @@ import org.apache.commons.jxpath.JXPathException;
 import org.apache.cxf.databinding.DataWriter;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.interceptor.BareOutInterceptor;
+import org.apache.cxf.io.CachedOutputStream;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageContentsList;
@@ -28,15 +30,13 @@ import org.apache.cxf.message.MessageUtils;
 import org.apache.cxf.service.Service;
 import org.apache.cxf.service.model.BindingOperationInfo;
 import org.apache.cxf.service.model.MessagePartInfo;
-import org.apache.cxf.staxutils.CachingXmlEventWriter;
+import org.apache.cxf.staxutils.StaxSource;
 import org.apache.cxf.staxutils.StaxUtils;
 import org.apache.neethi.Assertion;
 import org.talend.esb.policy.correlation.impl.xpath.XpathNamespace;
 import org.talend.esb.policy.correlation.impl.xpath.XpathPart;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
-import com.rits.cloning.Cloner;
 
 public class XPathProcessor extends BareOutInterceptor {
 
@@ -74,25 +74,40 @@ public class XPathProcessor extends BareOutInterceptor {
 
 		for (MessagePartInfo part : parts) {
 			if (objs.hasValue(part)) {
-				NamespaceContext c = null;
-				if (!part.isElement()
-						&& xmlWriter instanceof CachingXmlEventWriter) {
-					try {
-						c = xmlWriter.getNamespaceContext();
-						xmlWriter
-								.setNamespaceContext(new CachingXmlEventWriter.NSContext(
-										null));
-					} catch (XMLStreamException e) {
-					}
-				}
 				Object o = objs.get(part);
-				dataWriter.write(o, part, xmlWriter);
-				if (c != null) {
-					try {
-						xmlWriter.setNamespaceContext(c);
-					} catch (XMLStreamException e) {
-						// ignore
-					}
+				try {
+		            if (o instanceof Source) {
+		            	XMLStreamReader reader = null;
+	            		if(o instanceof DataSource){
+	            			DataSource s = (DataSource)o;
+	            			 reader = StaxUtils.createXMLStreamReader(s.getInputStream());
+	            		}else if(o instanceof StreamSource){
+	            			StreamSource s = (StreamSource)o;
+	            			 reader = StaxUtils.createXMLStreamReader(s.getInputStream());
+	            		} else if(o instanceof StaxSource){
+	            			StaxSource s = (StaxSource)o;
+	            			 reader = s.getXMLStreamReader();
+	            		}		            		
+	            		
+	            		if(reader!=null){
+							// Read original Stream data to buffer
+							CachedOutputStream cos = new CachedOutputStream();
+							StaxUtils.copy(reader, cos);
+							reader.close();
+							
+							StaxUtils.copy(StaxUtils.createXMLStreamReader(cos.getInputStream()), xmlWriter);
+		
+							// Replace original source by cached one
+							StaxSource source = new StaxSource(StaxUtils.createXMLStreamReader(cos.getInputStream()));
+							objs.put(part, source);
+	            		}else{
+	            			dataWriter.write(o, part, xmlWriter);
+	            		}
+		            } else {
+		            	dataWriter.write(o, part, xmlWriter);
+		            }
+				} catch (Exception e) {
+					throw new RuntimeException("Can not read part of SOAP body", e);
 				}
 			}
 		}
@@ -195,13 +210,8 @@ public class XPathProcessor extends BareOutInterceptor {
 	}
 
 	private void loadSoapBodyToBuffer(Message message){
-		Cloner cloner = new Cloner();
-		MessageContentsList original = MessageContentsList.getContentsList(message);
-		fixateStreams(original);
-		MessageContentsList clone = cloner.deepClone(original);
-		message.setContent(List.class, clone);
+		fixateStreams(message);
 		handleMessage(message);
-		message.setContent(List.class, original);
 	}
 	
 	private String buildCorrelationIdFromXpathParts(
@@ -293,7 +303,10 @@ public class XPathProcessor extends BareOutInterceptor {
 		return  resultMap;
 	}
 
-	private static void fixateStreams(List<?> list) {
+	private void fixateStreams(Message message) {
+		
+		MessageContentsList list  = MessageContentsList.getContentsList(message);
+		
 		for (Object o : list) {
 			if (o instanceof StreamSource) {
 				final StreamSource s = (StreamSource) o;
@@ -304,7 +317,8 @@ public class XPathProcessor extends BareOutInterceptor {
 				try {
 					s.setInputStream(IOUtils.loadIntoBAIS(is));
 				} catch (IOException e) {
-					// FIXME: add error handling
+					throw new RuntimeException(
+							"Can not set unput stream for XPATH processing", e);
 				}
 			}
 		}
