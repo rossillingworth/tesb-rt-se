@@ -16,9 +16,10 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
         <property name="brokerURL" value="tcp://localhost:61616"/>
     </bean>
 
+    <!-- The connection factory will by found by its default bean id="ConnectionFactory" -->
     <jaxrs:server xmlns:s="http://books.com"
                   serviceName="s:BookService"
-                  address="jms:queue:test.jmstransport.text?messageType=byte"
+                  address="jms:queue:test.jmstransport.text"
                   id="jms-server">
         <jaxrs:serviceBeans>
             <ref bean="store" />
