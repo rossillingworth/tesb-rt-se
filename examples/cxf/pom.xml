@@ -34,15 +34,15 @@
         <module>jaxrs-jaxws-java-first</module>
         <module>jaxrs-jaxws-description-first</module>
         <module>jaxrs-jaxws-authorization</module>
-<!--         <module>jaxrs-jms-http</module> -->
+        <module>jaxrs-jms-http</module> 
         <module>jaxrs-attachments</module>
         <module>jaxrs-jaxws-transformations</module>
         <module>interceptors</module>
         <module>jaxws-cxf-sts</module>
         <module>jaxws-cxf-sts-advanced</module>
         <module>jaxws-ws-secpol</module>
-<!--         <module>jaxrs-oauth</module> -->
-<!--         <module>jaxrs-oauth2</module> -->
+        <module>jaxrs-oauth</module> 
+        <module>jaxrs-oauth2</module> 
         <module>features</module>
         <module>dev-guide-wsdl-first</module>
     </modules>

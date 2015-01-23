@@ -46,7 +46,7 @@ public class OAuthClientManager {
 	}
 	
 	public String createAuthorizationHeader(ClientAccessToken token) {
-		return OAuthClientUtils.createAuthorizationHeader(consumer, token);
+		return OAuthClientUtils.createAuthorizationHeader(token);
 	}
 	
 	public void setAccessTokenService(WebClient ats) {

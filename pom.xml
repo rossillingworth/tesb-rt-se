@@ -439,7 +439,11 @@
         </plugins>
     </build>
 
-    <!--repositories>
+    <repositories>
+        <repository>
+        <id>backbone</id>
+        <url>http://sop-ip14.servicebackbone.org:8081/nexus/content/repositories/thirdparty-dev/</url>
+      </repository>
         <repository>
             <id>apache-snapshots</id>
             <url>http://repository.apache.org/snapshots</url>
@@ -464,7 +468,7 @@
                 <enabled>false</enabled>
             </releases>
         </pluginRepository>
-    </pluginRepositories-->
+    </pluginRepositories>
 
     <distributionManagement>
         <repository>
