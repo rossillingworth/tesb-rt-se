@@ -13,6 +13,7 @@
         <groupId>org.talend.cxf-examples.jaxrs-jms-http</groupId>
         <artifactId>jaxrs-jms-http</artifactId>
         <version>1.0</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <build>
