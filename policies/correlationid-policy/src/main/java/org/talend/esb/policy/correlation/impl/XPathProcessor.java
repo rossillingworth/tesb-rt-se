@@ -2,8 +2,6 @@ package org.talend.esb.policy.correlation.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +18,6 @@ import javax.xml.transform.stream.StreamSource;
 import org.apache.commons.jxpath.JXPathContext;
 import org.apache.commons.jxpath.JXPathException;
 import org.apache.cxf.databinding.DataWriter;
-import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.interceptor.BareOutInterceptor;
 import org.apache.cxf.io.CachedOutputStream;
 import org.apache.cxf.message.Exchange;
@@ -210,7 +207,6 @@ public class XPathProcessor extends BareOutInterceptor {
 	}
 
 	private void loadSoapBodyToBuffer(Message message){
-		fixateStreams(message);
 		handleMessage(message);
 	}
 	
@@ -302,27 +298,4 @@ public class XPathProcessor extends BareOutInterceptor {
 		
 		return  resultMap;
 	}
-
-	private void fixateStreams(Message message) {
-		
-		MessageContentsList list  = MessageContentsList.getContentsList(message);
-		
-		for (Object o : list) {
-			if (o instanceof StreamSource) {
-				final StreamSource s = (StreamSource) o;
-				final InputStream is = s.getInputStream();
-				if (is == null || (is instanceof ByteArrayInputStream)) {
-					continue;
-				}
-				try {
-					s.setInputStream(IOUtils.loadIntoBAIS(is));
-				} catch (IOException e) {
-					throw new RuntimeException(
-							"Can not set unput stream for XPATH processing", e);
-				}
-			}
-		}
-	}
 }
-
-
