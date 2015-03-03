@@ -71,6 +71,7 @@ public class ConfigurationUpdater implements ManagedService {
 
 	private final Configuration configuration;
 	private String configIdentifier = null;
+	@SuppressWarnings("rawtypes")
 	private ServiceRegistration registration = null;
 
 	static {
@@ -138,6 +139,7 @@ public class ConfigurationUpdater implements ManagedService {
 		return configuration.getAlternateConfigurationIdentifier();
 	}
 
+	@SuppressWarnings("rawtypes")
 	private ServiceRegistration register(
 			BundleContext bundleContext, String servicePid) {
 		final Hashtable<String, Object> properties =
