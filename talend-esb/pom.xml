@@ -36,7 +36,7 @@
         <jclouds.version>1.7.2</jclouds.version>
         <pax-url-classpath.version>1.2.8</pax-url-classpath.version>
         <wss4j.version>1.6.18</wss4j.version>
-        <xalan.version>2.7.1_7</xalan.version>
+        <xalan.version>2.7.2_1</xalan.version>
         <xbean.version>3.14</xbean.version>
         <xerces.version>2.11.0_1</xerces.version>
         <log4j.version>1.2.17</log4j.version>
@@ -680,10 +680,10 @@
                             <target>
                                 <replace file="target/dependencies/apache-camel-${camel.version}-features.xml">
                                     <replacefilter
-                                        token="apache-cxf/2.7.11/xml/features"
+                                        token="apache-cxf/2.7.14/xml/features"
                                         value="apache-cxf/${cxf.version}/xml/features"/>
                                     <replacefilter
-                                        token="org.apache.zookeeper/zookeeper/3.4.5"
+                                        token="org.apache.zookeeper/zookeeper/3.4.6"
                                         value="org.apache.zookeeper/zookeeper/${zookeeper.version}"/>
                                     <!-- patch for xalan and xerces version -->
                                     <replacefilter>
