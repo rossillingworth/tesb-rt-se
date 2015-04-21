@@ -101,7 +101,9 @@ b) *** This option is only applicable to the users of Talend Enterprise ESB ***
 To run client/service from eclipse:
 a) Without Service Registry:
    mvn eclipse:eclipse
+   Export library-service, library-client and library-common projects into eclipse.
    Use LibraryServer.java LibraryClient.java main() methods to start service and client.
 b) With Service Registry:
    mvn eclipse:eclipse -Pservice-registry
+   Export library-service, library-client and library-common projects into eclipse.
    Use LibraryServer.java LibraryClient.java main() methods to start service and client.
