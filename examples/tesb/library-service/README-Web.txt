@@ -107,3 +107,36 @@ b) With Service Registry:
    mvn eclipse:eclipse -Pservice-registry
    Export library-service, library-client and library-common projects into eclipse.
    Use LibraryServer.java LibraryClient.java main() methods to start service and client.
+
+
+
+Usage of IBM WebSphere MQ as a MOM
+---------------------------------
+*** This option is only applicable to the users of Talend Enterprise ESB ***
+
+1. To use WSMQ as a MOM, JMS URI's should be changed. For example,
+   to connect to "exampleQueue" which is running on localhost:1414
+   using channel EXAMPLE.CHANNEL.SVRCONN following URI may be used:
+
+       jms:queue:exampleQueue?jndiInitialContextFactory=org.talend.esb.jms.wmq.Nojndi&jndiConnectionFactoryName=connectQueueManager(QMGR)binding(client)clientChannel(EXAMPLE.CHANNEL.SVRCONN)clientConnection(localhost:1414)
+
+   Topic connection URI looks like the one below:
+
+       jms:topic:exampleTopic?jndiInitialContextFactory=org.talend.esb.jms.wmq.Nojndi&jndiConnectionFactoryName=connectQueueManager(QMGR)binding(client)clientChannel(EXAMPLE.CHANNEL.SVRCONN)clientConnection(localhost:1414)&jndi-destination-type=topic
+
+
+   NOTE: In xml and wsdl files symbol "&" in URI should be replaced with  "&amp;"  (without double quotes).
+
+
+
+2. Following dependency should be added to client and service classpath:
+
+       <dependency>
+           <groupId>org.talend.esb</groupId>
+           <artifactId>tesb-jms-transport-enterprise</artifactId>
+           <version>${project.version}</version>
+       </dependency>
+
+
+3. As WS MQ client library jars provided by IBM are not supplied with Talend Enterprise ESB,
+   they should be added to client and service classpath manually.

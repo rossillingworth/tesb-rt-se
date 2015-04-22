@@ -167,6 +167,7 @@
                             org.springframework.scheduling.annotation;;resolution:=optional,
                             org.springframework.scheduling.config;;resolution:=optional,
                             org.springframework.scheduling.concurrent;;resolution:=optional,
+                            org.talend.esb.jms.wmq;resolution:=optional,
                             *
                         </Import-Package>
                     </instructions>

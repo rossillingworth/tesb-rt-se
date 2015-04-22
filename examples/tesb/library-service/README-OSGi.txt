@@ -124,3 +124,34 @@ b) *** This option is only applicable to the users of Talend Enterprise ESB ***
       - run the following commands in the container:
 
       features:install library-client
+
+
+
+Usage of IBM WebSphere MQ as a MOM
+---------------------------------
+*** This option is only applicable to the users of Talend Enterprise ESB ***
+
+1. To use WSMQ as a MOM, JMS URI's should be changed. For example,
+   to connect to "exampleQueue" which is running on localhost:1414
+   using channel EXAMPLE.CHANNEL.SVRCONN following URI may be used:
+
+       jms:queue:exampleQueue?jndiInitialContextFactory=org.talend.esb.jms.wmq.Nojndi&jndiConnectionFactoryName=connectQueueManager(QMGR)binding(client)clientChannel(EXAMPLE.CHANNEL.SVRCONN)clientConnection(localhost:1414)
+
+   Topic connection URI looks like the one below:
+
+       jms:topic:exampleTopic?jndiInitialContextFactory=org.talend.esb.jms.wmq.Nojndi&jndiConnectionFactoryName=connectQueueManager(QMGR)binding(client)clientChannel(EXAMPLE.CHANNEL.SVRCONN)clientConnection(localhost:1414)&jndi-destination-type=topic
+
+
+   NOTE: In xml and wsdl files symbol "&" in URI should be replaced with  "&amp;"  (without double quotes).
+
+
+2. As WS MQ client library jars provided by IBM are not supplied with Talend Enterprise ESB,
+   they should be deployed to the container manually.
+
+
+3. Run the follwing command in the container:
+
+       features:install tesb-jms-transport-enterprise
+
+
+4. Follow the steps described in a) or b) in this ReadMe file.
