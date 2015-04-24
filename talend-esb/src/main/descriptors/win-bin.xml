@@ -220,6 +220,7 @@
                 <exclude>system/org/apache/karaf/management/mbeans/org.apache.karaf.management.mbeans.config/2.3.9/*.jar</exclude>
                 <exclude>system/org/apache/karaf/shell/org.apache.karaf.shell.config/2.3.9/*.jar</exclude>
                 <exclude>system/org/apache/karaf/shell/org.apache.karaf.shell.dev/2.3.9/*.jar</exclude>
+                <exclude>system/org/apache/karaf/jaas/org.apache.karaf.jaas.modules/2.3.9/*.jar</exclude>
                 <exclude>README</exclude>
                 <exclude>RELEASE-NOTES</exclude>
                 <exclude>LICENSE</exclude>
@@ -589,6 +590,11 @@
         <file>
             <source>${basedir}/target/dependencies/org.apache.karaf.shell.dev-2.3.9-TESB.jar</source>
             <outputDirectory>/container/system/org/apache/karaf/shell/org.apache.karaf.shell.dev/2.3.9/</outputDirectory>
+            <fileMode>0644</fileMode>
+        </file>
+        <file>
+            <source>${basedir}/target/dependencies/org.apache.karaf.jaas.modules-2.3.9-TESB.jar</source>
+            <outputDirectory>/container/system/org/apache/karaf/jaas/org.apache.karaf.jaas.modules/2.3.9/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
     </files>

@@ -462,6 +462,14 @@
                                     <classifier>TESB</classifier>
                                     <outputDirectory>target/dependencies</outputDirectory>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.karaf.jaas</groupId>
+                                    <artifactId>org.apache.karaf.jaas.modules</artifactId>
+                                    <version>2.3.9</version>
+                                    <type>jar</type>
+                                    <classifier>TESB</classifier>
+                                    <outputDirectory>target/dependencies</outputDirectory>
+                                </artifactItem>
                             </artifactItems>
 						</configuration>
 					</execution>
@@ -728,6 +736,10 @@
                                     <replacefilter>
                                         <replacetoken>org.apache.karaf.shell.dev/2.3.9&lt;/bundle&gt;</replacetoken> 
                                         <replacevalue>org.apache.karaf.shell.dev/2.3.9/jar/TESB&lt;/bundle&gt;</replacevalue>
+                                    </replacefilter>
+                                    <replacefilter>
+                                        <replacetoken>org.apache.karaf.jaas.modules/2.3.9&lt;/bundle&gt;</replacetoken> 
+                                        <replacevalue>org.apache.karaf.jaas.modules/2.3.9/jar/TESB&lt;/bundle&gt;</replacevalue>
                                     </replacefilter>
                                 </replace>
                             </target>
