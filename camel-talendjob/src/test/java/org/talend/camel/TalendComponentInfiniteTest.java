@@ -43,6 +43,9 @@ public class TalendComponentInfiniteTest extends CamelTestSupport {
         }
 
         public int runJobInTOS(String[] args) {
+            synchronized (JobInfinite.class) {
+                JobInfinite.class.notify();
+            }
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
@@ -61,6 +64,9 @@ public class TalendComponentInfiniteTest extends CamelTestSupport {
     public void testJobInfiniteDirect() throws Exception {
         template.asyncRequestBody("direct:infinite", null);
         assertFalse(JobInfinite.isPassed());
+        synchronized (JobInfinite.class) {
+            JobInfinite.class.wait();
+        }
         context.stop();
         assertTrue(JobInfinite.isPassed());
     }
@@ -69,6 +75,20 @@ public class TalendComponentInfiniteTest extends CamelTestSupport {
     public void testJobInfiniteSeda() throws Exception {
         sendBody("seda:infinite", null);
         assertFalse(JobInfinite.isPassed());
+        synchronized (JobInfinite.class) {
+            JobInfinite.class.wait();
+        }
+        context.stop();
+        assertTrue(JobInfinite.isPassed());
+    }
+
+    @Test
+    public void testJobInfiniteDirectParallel() throws Exception {
+        template.asyncRequestBody("direct:parallel", null);
+        assertFalse(JobInfinite.isPassed());
+        synchronized (JobInfinite.class) {
+            JobInfinite.class.wait();
+        }
         context.stop();
         assertTrue(JobInfinite.isPassed());
     }
@@ -78,10 +98,14 @@ public class TalendComponentInfiniteTest extends CamelTestSupport {
         return new RouteBuilder() {
             public void configure() {
                 from("direct:infinite")
-                    .to("talend://org.talend.camel.TalendComponentInfiniteTest$JobInfinite?propagateHeader=false");
+                    .to("talend://org.talend.camel.TalendComponentInfiniteTest$JobInfinite");
 
                 from("seda:infinite")
-                    .to("talend://org.talend.camel.TalendComponentInfiniteTest$JobInfinite?propagateHeader=false");
+                    .to("talend://org.talend.camel.TalendComponentInfiniteTest$JobInfinite");
+
+                from("direct:parallel")
+                    .split(constant("1,2,3").tokenize(",")).parallelProcessing()
+                    .to("talend://org.talend.camel.TalendComponentInfiniteTest$JobInfinite");
             }
         };
     }

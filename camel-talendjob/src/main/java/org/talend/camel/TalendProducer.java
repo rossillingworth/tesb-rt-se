@@ -86,9 +86,9 @@ public class TalendProducer extends DefaultProducer {
         }
     }
 
-    private void invokeTalendJob(TalendJob jobInstance, String[] args, Exchange exchange) {
+    private void invokeTalendJob(final TalendJob jobInstance, String[] args, Exchange exchange) {
         try {
-            Method setExchangeMethod =
+            final Method setExchangeMethod =
                     jobInstance.getClass().getMethod("setExchange", new Class[]{Exchange.class});
             LOG.debug("Pass the exchange from route to Job");
             ObjectHelper.invokeMethod(setExchangeMethod, jobInstance, exchange);
@@ -100,10 +100,12 @@ public class TalendProducer extends DefaultProducer {
                     + ".runJob(String[] args)' with args: " + Arrays.toString(args));
         }
 
-        ClassLoader oldContextCL = Thread.currentThread().getContextClassLoader();
+        // use local variable due to single component instance during parallel processing
+        final Thread thread = Thread.currentThread();
+        workingThread = thread;
+        final ClassLoader oldContextCL = thread.getContextClassLoader();
         try {
-            workingThread = Thread.currentThread();
-            workingThread.setContextClassLoader(jobInstance.getClass().getClassLoader());
+            thread.setContextClassLoader(jobInstance.getClass().getClassLoader());
             int result = jobInstance.runJobInTOS(args);
             if (result != 0) {
                 throw new RuntimeCamelException("Execution of Talend job '" 
@@ -112,7 +114,7 @@ public class TalendProducer extends DefaultProducer {
                 // Talend logs errors using System.err.println
             }
         } finally {
-            workingThread.setContextClassLoader(oldContextCL);
+            thread.setContextClassLoader(oldContextCL);
             workingThread = null;
         }
     }
