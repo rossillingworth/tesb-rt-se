@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,8 +30,12 @@ import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 import javax.xml.ws.handler.MessageContext;
 
+import org.apache.cxf.binding.soap.Soap12;
+import org.apache.cxf.binding.soap.SoapFault;
+import org.apache.cxf.binding.soap.SoapVersion;
 import org.apache.cxf.headers.Header;
 import org.apache.cxf.helpers.CastUtils;
+import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.staxutils.StaxUtils;
 import org.dom4j.io.SAXReader;
 import org.osgi.service.cm.ConfigurationException;
@@ -82,9 +86,9 @@ public class GenericServiceProviderImpl implements GenericServiceProvider,
         QName operationQName = (QName) context.getMessageContext().get(
                 MessageContext.WSDL_OPERATION);
         LOG.info("Invoke operation '" + operationQName + "'");
-        GenericOperation esbProviderCallback = 
+        GenericOperation esbProviderCallback =
              getESBProviderCallback(operationQName.getLocalPart());
-        
+
         if (esbProviderCallback == null) {
             throw new RuntimeException("Handler for operation "
                     + operationQName + " cannot be found");
@@ -142,20 +146,28 @@ public class GenericServiceProviderImpl implements GenericServiceProvider,
     }
 
     private Source processResult(Object result) {
-    	Source source = null;
+        Source source = null;
         if (result instanceof org.dom4j.Document) {
-        	try {
-			    source = DOM4JMarshaller.documentToSource((org.dom4j.Document) result);
-			} catch (org.dom4j.DocumentException e) {
-				throw new RuntimeException(e);
-			}
+            try {
+                source = DOM4JMarshaller.documentToSource((org.dom4j.Document) result);
+            } catch (org.dom4j.DocumentException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (result instanceof Fault) {
+            Fault fault = (Fault) result;
+            SoapVersion soapVersion = (SoapVersion) context.getMessageContext().get(SoapVersion.class.getName());
+            SoapFault soapFault = SoapFault.createFault(fault, soapVersion);
+            if (soapVersion instanceof Soap12) {
+                soapFault.setFaultCode(Soap12.getInstance().getReceiver());
+                soapFault.setSubCode(fault.getFaultCode());
+            }
+            throw soapFault;
         } else if (result instanceof RuntimeException) {
             throw (RuntimeException) result;
         } else if (result instanceof Throwable) {
             throw new RuntimeException((Throwable) result);
         } else {
-            throw new RuntimeException("Provider return incompatible object: "
-                    + result.getClass().getName());
+            throw new RuntimeException("Provider return incompatible object: " + result.getClass().getName());
         }
         return source;
     }
