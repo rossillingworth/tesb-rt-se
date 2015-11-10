@@ -202,7 +202,6 @@
                 <exclude>system/org/apache/karaf/features/enterprise/**</exclude>
                 <exclude>system/org/apache/karaf/features/spring/**</exclude>
                 <exclude>system/org/apache/karaf/features/standard/**</exclude>
-                <exclude>system/file:/**</exclude>
                 <!-- Equinox patch -->
                 <exclude>system/org/eclipse/birt/**</exclude>
                 <exclude>README</exclude>
@@ -561,12 +560,6 @@
         <file>
             <source>${basedir}/target/dependencies/org.eclipse.osgi-3.10.2.jar</source>
             <outputDirectory>/container/system/org/eclipse/osgi/org.eclipse.osgi/3.10.2/</outputDirectory>
-            <fileMode>0644</fileMode>
-        </file>
-        <!-- workaround for shibboleth dependency (TESB-16162) -->
-        <file>
-            <source>${basedir}/target/dependencies/java-support-${shibboleth.version}.jar</source>
-            <outputDirectory>/container/system/net/shibboleth/utilities/java-support/${shibboleth.version}/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
     </files>
