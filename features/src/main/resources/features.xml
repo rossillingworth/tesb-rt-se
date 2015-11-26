@@ -224,7 +224,7 @@
     <bundle start-level='50'>mvn:org.talend.esb/security-common/${project.version}</bundle>
   </feature>
 
-  <feature name="talend-job-api" version="${project.version}"">
+  <feature name="talend-job-api" version="${project.version}">
     <bundle>mvn:org.talend.esb.job/org.talend.esb.job.api/${project.version}</bundle>
   </feature>
 
