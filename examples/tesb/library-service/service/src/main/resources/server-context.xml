@@ -19,8 +19,6 @@
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
 	<import resource="classpath:/META-INF/cxf/cxf.xml" />
-	<!-- CXF 3 JMS configuration style -->
-	<import resource="classpath:/META-INF/tesb/tesb-cxf-transport-jms.xml" />
 
 	<!-- for spring SAM definition (without using samenabling policy) -->
     <!-- <import resource="classpath:/META-INF/tesb/agent-context.xml" /> -->
@@ -83,6 +81,7 @@
         </jaxws:features>
         <jaxws:properties>
             <entry key="use.service.registry" value="$sr-config{use.service.registry}" />
+            <entry key="security.sts.applies-to" value="{http://services.talend.org/demos/Library/1.0}LibraryConsumer" />
             <entry key="ws-security.signature.properties" value="keys/clientKeystore.properties" />
             <entry key="ws-security.callback-handler">
                 <bean class="org.talend.services.demos.common.ClientCallbackHandler" />
@@ -134,6 +133,7 @@
         </jaxws:features>
         <jaxws:properties>
             <entry key="use.service.registry" value="$sr-config{use.service.registry}" />
+            <entry key="security.sts.applies-to" value="{http://services.talend.org/demos/Library/1.0}LibraryProvider" />
             <entry key="ws-security.signature.properties" value="keys/clientKeystore.properties" />
             <entry key="ws-security.callback-handler">
                 <bean class="org.talend.services.demos.common.ClientCallbackHandler" />

@@ -26,9 +26,6 @@
 
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 
-    <!-- CXF 3 JMS configuration style -->
-    <import resource="classpath:META-INF/tesb/tesb-cxf-transport-jms.xml" />
-
 	<!-- for spring SAM definition (without using samenabling policy) -->
     <!-- <import resource="classpath:/META-INF/tesb/agent-context.xml" /> -->
 
@@ -127,6 +124,7 @@
         </jaxws:features>
         <jaxws:properties>
             <entry key="use.service.registry" value="$sr-config{use.service.registry}" />
+            <entry key="security.sts.applies-to" value="{http://services.talend.org/demos/Library/1.0}LibraryProvider" />
             <entry key="org.talend.esb.mep.requestcallback.CallbackEndpoint">
                 <ref bean="LibraryConsumerJMS" />
             </entry>
