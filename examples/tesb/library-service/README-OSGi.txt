@@ -44,6 +44,7 @@ a) Without Service Registry
       - run the following commands in the container:
 
       tesb:start-aux-store
+      bundle:install mvn:org.talend.esb/transport-jms/<version>
 
       feature:repo-add mvn:org.talend.esb.examples.library-service/library-features/<version>/xml
 
@@ -78,6 +79,7 @@ b) *** This option is only applicable to the users of Talend Enterprise ESB ***
       tesb:start-sts
       tesb:start-sam
       tesb:switch-sts-jaas
+      bundle:install mvn:org.talend.esb/transport-jms/<version>
 
       - uploads into the service registry
       - <sr-resources-dir> is "<library-service-dir>/common/src/main/sr-resources"
