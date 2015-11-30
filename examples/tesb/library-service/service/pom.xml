@@ -156,9 +156,9 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Require-Bundle>
-                            org.apache.cxf.bundle,
-                            org.springframework.beans,
-                            transport-jms,
+                            org.apache.cxf.cxf-core,
+                            org.apache.cxf.cxf-rt-ws-security,
+                            org.apache.servicemix.bundles.spring-beans,
                             sam-agent,
                             sam-common
                         </Require-Bundle>
@@ -167,6 +167,7 @@
                             org.springframework.scheduling.annotation;;resolution:=optional,
                             org.springframework.scheduling.config;;resolution:=optional,
                             org.springframework.scheduling.concurrent;;resolution:=optional,
+                            org.talend.esb.transport.jms;;resolution:=optional,
                             *
                         </Import-Package>
                     </instructions>
