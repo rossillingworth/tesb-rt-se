@@ -702,6 +702,10 @@
                                         <replacetoken>&lt;bundle dependency='true'&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xerces/2.11.0_1&lt;/bundle&gt;</replacetoken> 
                                         <replacevalue></replacevalue>
                                     </replacefilter>
+                                    <!-- patch for geronimo-servlet version -->
+                                    <replacefilter
+                                        token="org.apache.geronimo.specs/geronimo-servlet_3.0_spec/1.0"
+                                        value="org.apache.geronimo.specs/geronimo-servlet_2.5_spec/1.2"/>
                                 </replace>
                                 <replace file="target/dependencies/apache-cxf-${cxf.version}-features.xml">
                                     <!-- patch for xalan and xerces version -->
