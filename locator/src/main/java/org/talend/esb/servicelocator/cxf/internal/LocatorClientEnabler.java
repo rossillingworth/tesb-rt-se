@@ -23,11 +23,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.ConduitSelectorHolder;
+import org.springframework.beans.factory.annotation.Value;
 import org.talend.esb.servicelocator.client.SLPropertiesMatcher;
 import org.talend.esb.servicelocator.client.ServiceLocator;
 
+@Singleton
 public class LocatorClientEnabler {
 
     private static final Logger LOG = Logger.getLogger(LocatorClientEnabler.class.getPackage().getName());
@@ -42,6 +47,7 @@ public class LocatorClientEnabler {
 
     private String defaultLocatorSelectionStrategy;
 
+    @Inject
     public void setServiceLocator(ServiceLocator serviceLocator) {
         locatorClient = serviceLocator;
         if (LOG.isLoggable(Level.FINE)) {
@@ -56,8 +62,13 @@ public class LocatorClientEnabler {
      * Sets a map representing the locatorSelectionStrategies and sets locatorSelectionStrategy to the DEFAULT_STRATEGY.
      * @param locatorSelectionStrategies
      */
-    public void setLocatorSelectionStrategies(
-            Map<String, LocatorSelectionStrategyFactory> locatorSelectionStrategies) {
+    @Inject
+    public void setLocatorSelectionStrategies(LocatorSelectionStrategyMap locatorSelectionStrategies) {
+        this.locatorSelectionStrategies = locatorSelectionStrategies;
+        this.locatorSelectionStrategyFactory = locatorSelectionStrategies.get(DEFAULT_STRATEGY);
+    }
+    
+    public void setLocatorSelectionStrategies(Map<String, LocatorSelectionStrategyFactory> locatorSelectionStrategies) {
         this.locatorSelectionStrategies = locatorSelectionStrategies;
         this.locatorSelectionStrategyFactory = locatorSelectionStrategies.get(DEFAULT_STRATEGY);
     }
@@ -88,6 +99,7 @@ public class LocatorClientEnabler {
      * unchanged.
      * @param defaultLocatorSelectionStrategy
      */
+    @Value("${locator.strategy}")
     public void setDefaultLocatorSelectionStrategy(String defaultLocatorSelectionStrategy) {
         if (LOG.isLoggable(Level.FINE)) {
             LOG.log(Level.FINE, "Default strategy " + defaultLocatorSelectionStrategy

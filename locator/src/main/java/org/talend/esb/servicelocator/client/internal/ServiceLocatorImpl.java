@@ -23,9 +23,14 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.xml.namespace.QName;
 
 import org.apache.zookeeper.ZooKeeper;
+import org.ops4j.pax.cdi.api.OsgiService;
+import org.springframework.beans.factory.annotation.Value;
 import org.talend.esb.servicelocator.client.*;
 import org.talend.esb.servicelocator.client.internal.zk.ZKBackend;
 
@@ -43,11 +48,14 @@ import org.talend.esb.servicelocator.client.internal.zk.ZKBackend;
  * clients can be looked up.
  * </ul>
  */
+@OsgiService
+@Singleton
 public class ServiceLocatorImpl implements ServiceLocator, ExpiredEndpointCollector {
 
     private static final Logger LOG = Logger.getLogger(ServiceLocatorImpl.class.getName());
 
-    private ServiceLocatorBackend backend;
+    @Inject
+    ServiceLocatorBackend backend;
 
     private EndpointTransformer transformer = new EndpointTransformerImpl();
 
@@ -462,10 +470,12 @@ public class ServiceLocatorImpl implements ServiceLocator, ExpiredEndpointCollec
         transformer = endpointTransformer;
     }
 
+    @Value("${locator.endpoints.timetolive.check}")
     public void setEndpointCollectionEnable(Boolean endpointCollectionDisable) {
         this.endpointCollectionEnable = endpointCollectionDisable;
     }
 
+    @Value("${locator.endpoints.timetolive.interval}")
     public void setEndpointCollectionInterval(Integer endpointCollectionInterval) {
         this.endpointCollectionInterval = endpointCollectionInterval;
     }

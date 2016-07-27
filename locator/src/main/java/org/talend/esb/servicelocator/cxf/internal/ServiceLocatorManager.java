@@ -19,6 +19,10 @@
  */
 package org.talend.esb.servicelocator.cxf.internal;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.ClientLifeCycleListener;
@@ -26,9 +30,12 @@ import org.apache.cxf.endpoint.ClientLifeCycleManager;
 import org.apache.cxf.endpoint.ConduitSelectorHolder;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.extension.BusExtension;
+import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.talend.esb.servicelocator.client.SLProperties;
 import org.talend.esb.servicelocator.client.SLPropertiesMatcher;
 
+@OsgiServiceProvider
+@Singleton
 public class ServiceLocatorManager implements BusExtension {
 
     private LocatorRegistrar locatorRegistrar;
@@ -84,6 +91,7 @@ public class ServiceLocatorManager implements BusExtension {
         clientEnabler.enable(conduitSelectorHolder, matcher, selectionStrategy);
     }
 
+    @Inject
     public void setBus(Bus anotherBus) {
         if (anotherBus != this.bus) {
             this.bus = anotherBus;
@@ -93,10 +101,12 @@ public class ServiceLocatorManager implements BusExtension {
         }
     }
 
+    @Inject
     public void setLocatorRegistrar(LocatorRegistrar locatorRegistrar) {
         this.locatorRegistrar = locatorRegistrar;
     }
 
+    @Inject
     public void setLocatorClientEnabler(LocatorClientEnabler locatorClientEnabler) {
         clientEnabler = locatorClientEnabler;
     }

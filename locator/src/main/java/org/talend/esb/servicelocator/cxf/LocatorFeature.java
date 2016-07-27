@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Singleton;
+
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.ConduitSelectorHolder;
@@ -32,10 +34,13 @@ import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.feature.AbstractFeature;
 import org.apache.cxf.interceptor.InterceptorProvider;
+import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.talend.esb.servicelocator.client.SLPropertiesImpl;
 import org.talend.esb.servicelocator.client.SLPropertiesMatcher;
 import org.talend.esb.servicelocator.cxf.internal.ServiceLocatorManager;
 
+@OsgiServiceProvider
+@Singleton
 public class LocatorFeature extends AbstractFeature implements LocatorFeatureInterface {
 
     private static final Logger LOG = Logger.getLogger(LocatorFeature.class.getName());
