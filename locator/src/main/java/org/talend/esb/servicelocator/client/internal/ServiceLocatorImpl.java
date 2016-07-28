@@ -29,7 +29,7 @@ import javax.inject.Singleton;
 import javax.xml.namespace.QName;
 
 import org.apache.zookeeper.ZooKeeper;
-import org.ops4j.pax.cdi.api.OsgiService;
+import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.talend.esb.servicelocator.client.*;
 import org.talend.esb.servicelocator.client.internal.zk.ZKBackend;
@@ -48,7 +48,7 @@ import org.talend.esb.servicelocator.client.internal.zk.ZKBackend;
  * clients can be looked up.
  * </ul>
  */
-@OsgiService
+@OsgiServiceProvider
 @Singleton
 public class ServiceLocatorImpl implements ServiceLocator, ExpiredEndpointCollector {
 

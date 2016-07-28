@@ -23,6 +23,6 @@ public class LocatorSelectionStrategyMap extends HashMap<String, LocatorSelectio
         EvenDistributionSelectionStrategyFactory evenDistributionSelectionStrategyFactory = new EvenDistributionSelectionStrategyFactory();
         evenDistributionSelectionStrategyFactory.setReloadAdressesCount(reloadAdressesCount);
         this.put("evenDistributionSelectionStrategy", evenDistributionSelectionStrategyFactory);
-        this.put("evenDistributionSelectionStrategy", new DefaultSelectionStrategyFactory());
+        this.put("defaultSelectionStrategy", new DefaultSelectionStrategyFactory());
     }
 }

@@ -30,10 +30,10 @@ import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.endpoint.ServerLifeCycleListener;
 import org.apache.cxf.endpoint.ServerLifeCycleManager;
 import org.apache.cxf.endpoint.ServerRegistry;
+import org.apache.cxf.ws.policy.PolicyEngine;
 import org.easymock.Capture;
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.esb.servicelocator.client.ServiceLocator;
 import org.talend.esb.servicelocator.client.ServiceLocator.PostConnectAction;
@@ -157,9 +157,10 @@ public class LocatorRegistrarTest extends EasyMockSupport {
         verifyAll();
     }
 
-    @Ignore
     @Test
     public void registerEndpointWithRelativeAddressWhenPrefixSet() throws Exception {
+        expect(bus1.getExtension(PolicyEngine.class)).andStubReturn(null);
+
         addServerLifeCycleManager(bus1);
         addBusLifeCycleManager(bus1);
 
