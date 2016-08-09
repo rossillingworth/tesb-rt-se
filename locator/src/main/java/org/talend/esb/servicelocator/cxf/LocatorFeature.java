@@ -32,10 +32,12 @@ import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.feature.AbstractFeature;
 import org.apache.cxf.interceptor.InterceptorProvider;
+import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.talend.esb.servicelocator.client.SLPropertiesImpl;
 import org.talend.esb.servicelocator.client.SLPropertiesMatcher;
 import org.talend.esb.servicelocator.cxf.internal.ServiceLocatorManager;
 
+@OsgiServiceProvider(classes=LocatorFeatureInterface.class)
 public class LocatorFeature extends AbstractFeature implements LocatorFeatureInterface {
 
     private static final Logger LOG = Logger.getLogger(LocatorFeature.class.getName());
@@ -56,7 +58,7 @@ public class LocatorFeature extends AbstractFeature implements LocatorFeatureInt
 
         ServiceLocatorManager slm = bus.getExtension(ServiceLocatorManager.class);
         slm.listenForAllServers(bus);
-        slm.listenForAllClients();
+        slm.listenForAllClients(bus);
     }
 
     @Override

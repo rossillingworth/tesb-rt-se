@@ -20,7 +20,6 @@
 package org.talend.esb.servicelocator.cxf.internal;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.cxf.Bus;
@@ -42,8 +41,6 @@ public class ServiceLocatorManager implements BusExtension {
 
     private LocatorClientEnabler clientEnabler;
 
-    private Bus bus;
-
     public void listenForAllServers(Bus anotherBus) {
         locatorRegistrar.startListenForServers(anotherBus);
     }
@@ -56,12 +53,12 @@ public class ServiceLocatorManager implements BusExtension {
         locatorRegistrar.registerServer(server, props, anotherBus);
     }
 
-    public void listenForAllClients() {
-        listenForAllClients(null);
+    public void listenForAllClients(Bus anotherBus) {
+        listenForAllClients(anotherBus, null);
     }
 
-    public void listenForAllClients(String selectionStrategy) {
-        ClientLifeCycleManager clcm = bus.getExtension(ClientLifeCycleManager.class);
+    public void listenForAllClients(Bus anotherBus, String selectionStrategy) {
+        ClientLifeCycleManager clcm = anotherBus.getExtension(ClientLifeCycleManager.class);
         clcm.registerListener(new ClientLifeCycleListenerForLocator());
     }
 
@@ -89,16 +86,6 @@ public class ServiceLocatorManager implements BusExtension {
             SLPropertiesMatcher matcher,
             String selectionStrategy) {
         clientEnabler.enable(conduitSelectorHolder, matcher, selectionStrategy);
-    }
-
-    @Inject
-    public void setBus(Bus anotherBus) {
-        if (anotherBus != this.bus) {
-            this.bus = anotherBus;
-            if (anotherBus != null) {
-                anotherBus.setExtension(this, ServiceLocatorManager.class);
-            }
-        }
     }
 
     @Inject

@@ -60,6 +60,7 @@
                     <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
+            <optional>true</optional>
         </dependency>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>

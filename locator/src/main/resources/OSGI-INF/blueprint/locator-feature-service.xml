@@ -32,8 +32,6 @@
         "
     >
 
-    <cxf:bus />
-
 	<cm:property-placeholder persistent-id="org.talend.esb.locator"
 		update-strategy="reload">
 		<cm:default-properties>
@@ -51,8 +49,5 @@
 			<cm:property name="locator.endpoints.timetolive.interval" value="300"/>
 		</cm:default-properties>
 	</cm:property-placeholder>   
-
-    <bean id="locatorFeature" class="org.talend.esb.servicelocator.cxf.LocatorFeature"/>
-    <service ref="locatorFeature" interface="org.talend.esb.servicelocator.cxf.LocatorFeatureInterface"/>
 
 </blueprint>
