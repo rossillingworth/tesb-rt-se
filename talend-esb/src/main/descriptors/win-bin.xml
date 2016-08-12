@@ -199,6 +199,8 @@
                 <exclude>etc/users.properties</exclude>
                 <exclude>etc/org.apache.karaf.features.cfg</exclude>
                 <exclude>etc/org.ops4j.pax.logging.cfg</exclude>
+                <exclude>etc/org.ops4j.pax.url.mvn.cfg</exclude>
+                <exclude>etc/startup.properties</exclude>
                 <exclude>etc/shell.init.script</exclude>
                 <exclude>lib/endorsed/xerces-2.11.0.jar</exclude>
                 <exclude>system/org/apache/karaf/features/enterprise/**</exclude>
@@ -596,6 +598,12 @@
         <file>
             <source>${basedir}/target/dependencies/org.apache.karaf.features.core-${karaf.version}-TESB.jar</source>
             <outputDirectory>/container/system/org/apache/karaf/features/org.apache.karaf.features.core/${karaf.version}/</outputDirectory>
+            <fileMode>0644</fileMode>
+        </file>
+        <!-- pax-url-aether library patch (TESB-17522) -->
+        <file>
+            <source>${basedir}/target/dependencies/pax-url-aether-${pax-url-aether.version}.jar</source>
+            <outputDirectory>/container/system/org/ops4j/pax/url/pax-url-aether/${pax-url-aether.version}/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
         <!-- commons-collections version patch (TESB-16945) -->
