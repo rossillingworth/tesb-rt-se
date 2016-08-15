@@ -31,6 +31,7 @@ public class RandomSelectionStrategyFactory implements LocatorSelectionStrategyF
 
 	private int reloadAdressesCount = 10;
 
+
 	public void setReloadAdressesCount(int reloadAdressesCount) {
 	    this.reloadAdressesCount = reloadAdressesCount;
 	}

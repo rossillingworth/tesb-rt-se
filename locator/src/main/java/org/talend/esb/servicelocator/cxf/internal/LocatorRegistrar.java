@@ -133,4 +133,12 @@ public class LocatorRegistrar {
                     + methodName + " can be called.");
         }
     }
+    
+    public void setEndpointPrefixHttp(String endpointPrefixHttp) {
+        this.endpointPrefixHttp = endpointPrefixHttp;
+    }
+    
+    public void setEndpointPrefixHttps(String endpointPrefixHttps) {
+        this.endpointPrefixHttps = endpointPrefixHttps;
+    }
 }

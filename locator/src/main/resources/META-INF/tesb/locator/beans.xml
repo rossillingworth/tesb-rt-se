@@ -73,12 +73,8 @@
     <bean id="locatorRegistrar" class="org.talend.esb.servicelocator.cxf.internal.LocatorRegistrar">
         <property name="serviceLocator" ref="serviceLocator" />
         <property name="endpointPrefix" value="${endpoint.prefix}"/>
-        <property name="endpointPrefixes">
-            <map>
-                <entry key="HTTP" value="${endpoint.http.prefix}" />
-                <entry key="HTTPS" value="${endpoint.https.prefix}" />
-            </map>
-        </property>
+        <property name="endpointPrefixHttp" value="${endpoint.http.prefix}"/>
+        <property name="endpointPrefixHttps" value="${endpoint.https.prefix}"/>
     </bean>
 
     <bean id="defaultSelectionStrategyFactory" class="org.talend.esb.servicelocator.cxf.internal.DefaultSelectionStrategyFactory">
@@ -105,7 +101,6 @@
      </bean>
 
     <bean id="locatorManager" class="org.talend.esb.servicelocator.cxf.internal.ServiceLocatorManager">
-        <property name="bus" ref="cxf" />
         <property name="locatorRegistrar" ref="locatorRegistrar" />
         <property name="locatorClientEnabler" ref="locatorClientEnabler" />
     </bean> 

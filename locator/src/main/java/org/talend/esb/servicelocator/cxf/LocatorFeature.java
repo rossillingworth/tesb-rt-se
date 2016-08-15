@@ -50,13 +50,15 @@ public class LocatorFeature extends AbstractFeature implements LocatorFeatureInt
 
     public static final String LOCATOR_PROPERTIES = "esb.locator.properties";
 
+    private ServiceLocatorManager _slm;
+
     @Override
     public void initialize(Bus bus) {
         if (LOG.isLoggable(Level.FINE)) {
             LOG.log(Level.FINE, "Initializing Locator feature for bus " + bus);
         }
 
-        ServiceLocatorManager slm = bus.getExtension(ServiceLocatorManager.class);
+        ServiceLocatorManager slm = getLocatorManager(bus);
         slm.listenForAllServers(bus);
         slm.listenForAllClients(bus);
     }
@@ -72,8 +74,7 @@ public class LocatorFeature extends AbstractFeature implements LocatorFeatureInt
             setRequiredEndpointProperties(endpointProps);
         }
 
-        ServiceLocatorManager slm = bus.getExtension(ServiceLocatorManager.class);
-        slm.enableClient(client, slPropsMatcher, selectionStrategy);
+        getLocatorManager(bus).enableClient(client, slPropsMatcher, selectionStrategy);
     }
 
     @Override
@@ -87,8 +88,7 @@ public class LocatorFeature extends AbstractFeature implements LocatorFeatureInt
             setAvailableEndpointProperties(endpointProps);
         }
 
-        ServiceLocatorManager slm = bus.getExtension(ServiceLocatorManager.class);
-        slm.registerServer(server, slProps, bus);
+        getLocatorManager(bus).registerServer(server, slProps, bus);
     }
 
     @Override
@@ -116,12 +116,14 @@ public class LocatorFeature extends AbstractFeature implements LocatorFeatureInt
             setRequiredEndpointProperties(endpointProps);
         }
 
-        ServiceLocatorManager slm = bus.getExtension(ServiceLocatorManager.class);
-        slm.enableClient(conduitSelectorHolder, slPropsMatcher, selectionStrategy);
+        getLocatorManager(bus).enableClient(conduitSelectorHolder, slPropsMatcher, selectionStrategy);
     }
 
     protected ServiceLocatorManager getLocatorManager(Bus bus) {
-        return bus.getExtension(ServiceLocatorManager.class);
+        if (_slm == null) {
+            _slm = bus.getExtension(ServiceLocatorManager.class);
+        }
+        return _slm;
     }
 
     @Override
@@ -171,4 +173,7 @@ public class LocatorFeature extends AbstractFeature implements LocatorFeatureInt
         return (Map<String, String>) endpoint.get(LOCATOR_PROPERTIES);
     }
 
+    public void setServiceLocatorManager(ServiceLocatorManager slm) {
+        this._slm = slm;
+    }
 }

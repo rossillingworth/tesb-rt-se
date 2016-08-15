@@ -33,7 +33,7 @@ import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.talend.esb.servicelocator.client.SLProperties;
 import org.talend.esb.servicelocator.client.SLPropertiesMatcher;
 
-@OsgiServiceProvider
+@OsgiServiceProvider(classes=BusExtension.class)
 @Singleton
 public class ServiceLocatorManager implements BusExtension {
 
