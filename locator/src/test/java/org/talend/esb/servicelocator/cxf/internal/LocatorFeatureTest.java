@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package org.talend.esb.servicelocator.cxf;
+package org.talend.esb.servicelocator.cxf.internal;
 
 import static org.easymock.EasyMock.expect;
 
@@ -42,17 +42,7 @@ import org.easymock.EasyMockSupport;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.esb.servicelocator.cxf.internal.DefaultSelectionStrategy;
-import org.talend.esb.servicelocator.cxf.internal.DefaultSelectionStrategyFactory;
-import org.talend.esb.servicelocator.cxf.internal.EvenDistributionSelectionStrategy;
-import org.talend.esb.servicelocator.cxf.internal.EvenDistributionSelectionStrategyFactory;
-import org.talend.esb.servicelocator.cxf.internal.LocatorClientEnabler;
-import org.talend.esb.servicelocator.cxf.internal.LocatorFeatureImpl;
-import org.talend.esb.servicelocator.cxf.internal.LocatorRegistrar;
-import org.talend.esb.servicelocator.cxf.internal.LocatorSelectionStrategyFactory;
-import org.talend.esb.servicelocator.cxf.internal.LocatorTargetSelector;
-import org.talend.esb.servicelocator.cxf.internal.RandomSelectionStrategy;
-import org.talend.esb.servicelocator.cxf.internal.RandomSelectionStrategyFactory;
+import org.talend.esb.servicelocator.cxf.LocatorFeature;
 
 public class LocatorFeatureTest extends EasyMockSupport {
 

@@ -47,6 +47,7 @@ import org.talend.esb.servicelocator.client.ServiceLocator;
  * If a server which was registered before stops the LocatorRegistrar automatically unregisters from the
  * Service Locator.
  */
+@Named
 @Singleton
 public class LocatorRegistrar {
 

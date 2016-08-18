@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.zookeeper.CreateMode;
@@ -34,6 +35,7 @@ import org.talend.esb.servicelocator.client.internal.RootNode;
 import org.talend.esb.servicelocator.client.internal.ServiceLocatorBackend;
 import org.talend.esb.servicelocator.client.internal.ServiceLocatorImpl;
 
+@Named
 @Singleton
 public class ZKBackend implements ServiceLocatorBackend {
 

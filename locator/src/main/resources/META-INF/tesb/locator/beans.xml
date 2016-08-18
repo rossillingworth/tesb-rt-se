@@ -20,10 +20,13 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
-
+ 	<context:component-scan base-package="org.talend.esb.servicelocator" />
+ 	
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="order" value="3" />
         <property name="ignoreUnresolvablePlaceholders" value="true" />
@@ -56,7 +59,7 @@
         <property name="ignoreResourceNotFound" value="true" />
         <property name="location" value="file:${spring.config.location}/locator.properties"/>
     </bean>
-
+<!-- 
     <bean id="serviceLocatorBackend"
           class="org.talend.esb.servicelocator.client.internal.zk.ZKBackend"
           destroy-method="disconnect">
@@ -100,12 +103,9 @@
         <property name="defaultLocatorSelectionStrategy" value="${locator.strategy}" />
      </bean>
 
-    <bean id="locatorManager" class="org.talend.esb.servicelocator.cxf.internal.ServiceLocatorManager">
-        <property name="locatorRegistrar" ref="locatorRegistrar" />
-        <property name="locatorClientEnabler" ref="locatorClientEnabler" />
-    </bean>
-    
     <bean id="locatorFeature" class="org.talend.esb.servicelocator.cxf.internal.LocatorFeatureImpl">
-        <property name="serviceLocatorManager" ref="locatorManager" />
-    </bean> 
+        <property name="locatorRegistrar" ref="locatorRegistrar" />
+        <property name="clientEnabler" ref="locatorClientEnabler" />
+    </bean>
+     --> 
 </beans>

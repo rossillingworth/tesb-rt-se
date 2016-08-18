@@ -33,9 +33,7 @@
         address="locator://more_useful_information"
 		serviceClass="demo.common.Greeter">
 		<jaxws:features>
-			<bean class="org.talend.esb.servicelocator.cxf.LocatorFeature">
-				<property name="serviceLocatorManager" ref="locatorManager"/>
-			</bean>
+			<ref bean="locatorFeature"/>
 		</jaxws:features>
 	</jaxws:client>
 </beans>

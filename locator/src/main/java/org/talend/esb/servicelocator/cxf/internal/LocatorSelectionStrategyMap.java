@@ -3,10 +3,12 @@ package org.talend.esb.servicelocator.cxf.internal;
 import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.springframework.beans.factory.annotation.Value;
 
+@Named
 @Singleton
 public class LocatorSelectionStrategyMap extends HashMap<String, LocatorSelectionStrategyFactory> {
     

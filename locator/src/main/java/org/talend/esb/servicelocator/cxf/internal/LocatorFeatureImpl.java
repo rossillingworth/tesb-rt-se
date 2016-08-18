@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.cxf.Bus;
@@ -45,6 +46,7 @@ import org.talend.esb.servicelocator.client.SLPropertiesMatcher;
 import org.talend.esb.servicelocator.cxf.LocatorFeature;
 
 @OsgiServiceProvider(classes=LocatorFeature.class)
+@Named("locatorFeature")
 @Singleton
 public class LocatorFeatureImpl extends AbstractFeature implements LocatorFeature {
 

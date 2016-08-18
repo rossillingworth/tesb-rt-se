@@ -19,9 +19,28 @@
  */
 package org.talend.esb.servicelocator.cxf.internal;
 
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.capture;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.junit.Assert.fail;
+import static org.talend.esb.servicelocator.TestValues.ENDPOINT_1;
+import static org.talend.esb.servicelocator.TestValues.ENDPOINT_2;
+import static org.talend.esb.servicelocator.TestValues.ENDPOINT_3;
+import static org.talend.esb.servicelocator.TestValues.ENDPOINT_4;
+import static org.talend.esb.servicelocator.TestValues.PREFIX_1;
+import static org.talend.esb.servicelocator.TestValues.SERVICE_QNAME_1;
+import static org.talend.esb.servicelocator.TestValues.SERVICE_QNAME_2;
+import static org.talend.esb.servicelocator.TestValues.SERVICE_QNAME_3;
+import static org.talend.esb.servicelocator.TestValues.SERVICE_QNAME_4;
+import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.REL_SERVER_1;
+import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_1;
+import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_2;
+import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_3;
+import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_4;
+
 import java.util.Collections;
 import java.util.List;
-
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.buslifecycle.BusLifeCycleListener;
@@ -37,18 +56,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.esb.servicelocator.client.ServiceLocator;
 import org.talend.esb.servicelocator.client.ServiceLocator.PostConnectAction;
-
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.capture;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.junit.Assert.fail;
-import static org.talend.esb.servicelocator.TestValues.*;
-import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.REL_SERVER_1;
-import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_1;
-import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_2;
-import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_3;
-import static org.talend.esb.servicelocator.cxf.internal.CXFTestStubs.SERVER_4;
 
 public class LocatorRegistrarTest extends EasyMockSupport {
     
