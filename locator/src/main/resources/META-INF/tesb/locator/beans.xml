@@ -103,5 +103,9 @@
     <bean id="locatorManager" class="org.talend.esb.servicelocator.cxf.internal.ServiceLocatorManager">
         <property name="locatorRegistrar" ref="locatorRegistrar" />
         <property name="locatorClientEnabler" ref="locatorClientEnabler" />
+    </bean>
+    
+    <bean id="locatorFeature" class="org.talend.esb.servicelocator.cxf.internal.LocatorFeatureImpl">
+        <property name="serviceLocatorManager" ref="locatorManager" />
     </bean> 
 </beans>
