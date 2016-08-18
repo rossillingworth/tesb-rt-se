@@ -96,7 +96,7 @@
         <activemq.version>5.14.0</activemq.version>
         <spring.version>3.2.14.RELEASE</spring.version>
         <karaf.version>4.0.6-SNAPSHOT</karaf.version>
-        <zookeeper.version>3.4.6</zookeeper.version>
+        <zookeeper.version>3.4.7</zookeeper.version>
         <derby.version>10.8.1.2</derby.version>
         <slf4j.version>1.7.7</slf4j.version>
         <commons-lang.version>2.6</commons-lang.version>
@@ -128,7 +128,7 @@
 
         <surefire.plugin.version>2.18.1</surefire.plugin.version>
 
-        <cxf.build-utils.version>3.1.0</cxf.build-utils.version>
+        <cxf.build-utils.version>3.2.1</cxf.build-utils.version>
         <cxf.xjc-utils.version>3.0.5</cxf.xjc-utils.version> 
         <cxf.resources.base.path />
         <cxf.checkstyle.extension />
@@ -152,7 +152,7 @@
         <module>features</module>
         <module>sts</module>
         <module>camel-talendjob</module>
-        <module>adapters</module>
+<!--        <module>adapters</module>-->
         <module>auxiliary-storage</module>
         <module>request-callback</module>
         <module>transport-jms</module>
@@ -396,7 +396,7 @@
                     </reportPlugins>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.4</version>
@@ -414,7 +414,6 @@
                     </rulesets>
                     <targetJdk>1.6</targetJdk>
                     <linkXRef>false</linkXRef>
-                    <!--includeTests>true</includeTests-->
                     <verbose>true</verbose>
                     <excludeRoots>
                         <excludeRoot>${basedir}/src/main/generated</excludeRoot>
@@ -426,11 +425,10 @@
                         <phase>validate</phase>
                         <goals>
                             <goal>check</goal>
-                            <!--goal>cpd-check</goal-->
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
