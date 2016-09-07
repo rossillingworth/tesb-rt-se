@@ -372,9 +372,9 @@
                 <!-- patch for ActiveMQ features descriptor -->
                 <exclude>org/apache/activemq/activemq-karaf/${activemq.version}/activemq-karaf-${activemq.version}-features-core.xml</exclude>
                 <!-- patch for Karaf org.apache.karaf.features.core bundle -->
-                <exclude>system/org/apache/karaf/features/framework/${karaf.version}/framework-${karaf.version}-features.xml</exclude>
-                <exclude>system/org/apache/karaf/features/standard/${karaf.version}/standard-${karaf.version}-features.xml</exclude>
-                <exclude>system/org/apache/karaf/features/org.apache.karaf.features.core/${karaf.version}/**</exclude>
+                <exclude>org/apache/karaf/features/framework/${karaf.version}/framework-${karaf.version}-features.xml</exclude>
+                <exclude>org/apache/karaf/features/standard/${karaf.version}/standard-${karaf.version}-features.xml</exclude>
+                <exclude>org/apache/karaf/features/org.apache.karaf.features.core/${karaf.version}/**</exclude>
                 <!-- commons-collections version patch (TESB-16945) -->
                 <exclude>org/apache/karaf/features/enterprise/${karaf.version}/enterprise-${karaf.version}-features.xml</exclude>
                 <exclude>org/apache/karaf/features/spring/${karaf.version}/spring-${karaf.version}-features.xml</exclude>
