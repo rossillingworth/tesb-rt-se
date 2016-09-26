@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>esb-policies</artifactId>
 		<groupId>org.talend.esb.policies</groupId>
-		<version>6.3.0RC1</version>
+		<version>6.3.0-RC1</version>
 	</parent>
 
 	<artifactId>validation-policy</artifactId>

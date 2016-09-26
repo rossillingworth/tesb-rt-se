@@ -5,7 +5,7 @@
         <relativePath>..</relativePath>
         <groupId>org.talend.esb.examples.ebook</groupId>
         <artifactId>ebook</artifactId>
-        <version>6.3.0RC1</version>
+        <version>6.3.0-RC1</version>
     </parent>
     <artifactId>ebook-importer</artifactId>
     <packaging>bundle</packaging>

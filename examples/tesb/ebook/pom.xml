@@ -7,7 +7,7 @@
         <relativePath>..</relativePath>
         <artifactId>talend-esb-examples</artifactId>
         <groupId>org.talend.esb.examples</groupId>
-        <version>6.3.0RC1</version>
+        <version>6.3.0-RC1</version>
     </parent>
 
     <groupId>org.talend.esb.examples.ebook</groupId>

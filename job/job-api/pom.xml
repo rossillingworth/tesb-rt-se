@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.talend.esb.job</groupId>
         <artifactId>job-parent</artifactId>
-        <version>6.3.0RC1</version>
+        <version>6.3.0-RC1</version>
     </parent>
 
     <artifactId>org.talend.esb.job.api</artifactId>
