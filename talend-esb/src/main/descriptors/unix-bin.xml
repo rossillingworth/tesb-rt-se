@@ -258,7 +258,17 @@
                 <exclude>NOTICE</exclude>
                 <exclude>conf/jetty.xml</exclude>
                 <exclude>lib/optional/commons-collections-3.2.1.jar</exclude>
+                <!-- AMQ Webconsole version patch (TESB-18576) -->
+                <exclude>webapps/admin/**</exclude>
             </excludes>
+        </fileSet>
+        <!-- AMQ Webconsole version patch (TESB-18576) -->
+        <fileSet>
+            <directory>target/dependencies/activemq-webconsole/apache-activemq-${activemq.webconsole.version}</directory>
+            <outputDirectory>/activemq</outputDirectory>
+            <includes>
+                <include>webapps/admin/**</include>
+            </includes>
         </fileSet>
 
         <!-- Copy over unix activemq bin/ subdirectories -->
@@ -377,9 +387,9 @@
                 <!-- patch for Karaf org.apache.karaf.features.core bundle (TESB-17093) -->
                 <exclude>org/apache/karaf/features/framework/${karaf.version}/framework-${karaf.version}-features.xml</exclude>
                 <exclude>org/apache/karaf/features/org.apache.karaf.features.core/${karaf.version}/**</exclude>
-                <!-- patch for ActiveMQ features descriptor (TESB-17588) -->
+                <!-- patch for ActiveMQ features descriptor (TESB-18576) -->
                 <exclude>org/apache/activemq/activemq-karaf/${activemq.version}/activemq-karaf-${activemq.version}-features.xml</exclude>
-                <exclude>org/apache/activemq/activemq-web-console/${activemq.version}/activemq-web-console-${activemq.version}.war</exclude>
+                <exclude>org/apache/activemq/activemq-web-console/${activemq.version}/**</exclude>
                 <!-- patch for org.apache.karaf.jaas.modules (TESB-18577) -->
                 <exclude>org/apache/karaf/jaas/org.apache.karaf.jaas.modules/${karaf.version}/org.apache.karaf.jaas.modules-${karaf.version}.jar</exclude>
                 <!-- CXF patch (TESB-18699) -->
@@ -631,7 +641,7 @@
             <outputDirectory>/container/system/org/apache/karaf/features/org.apache.karaf.features.core/${karaf.version}/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
-        <!-- patch ActiveMQ features descriptor (TESB-17588) -->
+        <!-- patch ActiveMQ features descriptor (TESB-18576) -->
         <file>
             <source>${basedir}/target/dependencies/activemq-karaf-${activemq.version}-features.xml</source>
             <outputDirectory>/container/system/org/apache/activemq/activemq-karaf/${activemq.version}/</outputDirectory>
@@ -639,8 +649,8 @@
             <lineEnding>unix</lineEnding>
         </file>
         <file>
-            <source>${basedir}/target/dependencies/activemq-web-console-${activemq.version}-TESB.war</source>
-            <outputDirectory>/container/system/org/apache/activemq/activemq-web-console/${activemq.version}/</outputDirectory>
+            <source>${basedir}/target/dependencies/activemq-web-console-${activemq.webconsole.version}-TESB.war</source>
+            <outputDirectory>/container/system/org/apache/activemq/activemq-web-console/${activemq.webconsole.version}/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
         <!-- patch for org.apache.karaf.jaas.modules (TESB-18577) -->

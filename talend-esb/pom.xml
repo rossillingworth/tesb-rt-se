@@ -44,6 +44,7 @@
         <pax-web.version>4.2.5</pax-web.version>
         <zkclient.version>0.8</zkclient.version>
         <aries.blueprint.version>1.6.1</aries.blueprint.version>
+        <activemq.webconsole.version>5.13.5</activemq.webconsole.version>
 	</properties>
 
 	<dependencies>
@@ -577,7 +578,7 @@
                                     <outputDirectory>target/dependencies</outputDirectory>
                                     <destFileName>org.apache.karaf.features.core-${karaf.version}-TESB.jar</destFileName>
                                 </artifactItem>
-                                <!-- patch for ActiveMQ features descriptor (TESB-17588) -->
+                                <!-- patch for ActiveMQ features descriptor (TESB-17588, TESB-18576) -->
                                 <artifactItem>
                                     <groupId>org.apache.activemq</groupId>
                                     <artifactId>activemq-karaf</artifactId>
@@ -590,11 +591,11 @@
                                 <artifactItem>
                                     <groupId>org.apache.activemq</groupId>
                                     <artifactId>activemq-web-console</artifactId>
-                                    <version>${activemq.version}</version>
+                                    <version>${activemq.webconsole.version}</version>
                                     <classifier>TESB</classifier>
                                     <type>war</type>
                                     <outputDirectory>target/dependencies</outputDirectory>
-                                    <destFileName>activemq-web-console-${activemq.version}-TESB.war</destFileName>
+                                    <destFileName>activemq-web-console-${activemq.webconsole.version}-TESB.war</destFileName>
                                 </artifactItem>
                                 <!-- patch for org.apache.karaf.jaas.modules (TESB-18577) -->
                                 <artifactItem>
@@ -731,6 +732,15 @@
 									<classifier>bin</classifier>
 									<outputDirectory>target/dependencies/activemq-win</outputDirectory>
 								</artifactItem>
+                                <!-- AMQ Webconsole version patch (TESB-18576) -->
+                                <artifactItem>
+                                    <groupId>org.apache.activemq</groupId>
+                                    <artifactId>apache-activemq</artifactId>
+                                    <version>${activemq.webconsole.version}</version>
+                                    <type>zip</type>
+                                    <classifier>bin</classifier>
+                                    <outputDirectory>target/dependencies/activemq-webconsole</outputDirectory>
+                                </artifactItem>
 							</artifactItems>
 						</configuration>
 					</execution>
@@ -947,11 +957,11 @@
                                         <include name="startup.properties"/>
                                     </fileset>
                                  </replaceregexp>
-                                 <!-- patch for ActiveMQ features descriptor (TESB-17588) -->
+                                 <!-- patch for ActiveMQ features descriptor (TESB-18576) -->
                                 <replace file="target/dependencies/activemq-karaf-${activemq.version}-features.xml">
                                     <replacefilter
                                         token="org.apache.activemq/activemq-web-console/${activemq.version}/war&lt;"
-                                        value="org.apache.activemq/activemq-web-console/${activemq.version}/war/TESB&lt;"/>
+                                        value="org.apache.activemq/activemq-web-console/${activemq.webconsole.version}/war/TESB&lt;"/>
                                 </replace>
                             </target>
                         </configuration>
