@@ -559,6 +559,14 @@
                                     <outputDirectory>target/dependencies</outputDirectory>
                                     <destFileName>camel-kafka-${camel.version}-TESB.jar</destFileName>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.xerial.snappy/</groupId>
+                                    <artifactId>snappy-java</artifactId>
+                                    <version>1.1.2</version>
+                                    <type>jar</type>
+                                    <outputDirectory>target/dependencies</outputDirectory>
+                                    <destFileName>snappy-java-1.1.2.jar</destFileName>
+                                </artifactItem>
                                 <!-- patch for Karaf org.apache.karaf.features.core bundle (TESB-17093) -->
                                 <artifactItem>
                                     <groupId>org.apache.karaf.features</groupId>
@@ -885,7 +893,8 @@
                                     <replacefilter>
                                         <replacetoken>&lt;bundle dependency='true'&gt;mvn:org.scala-lang/scala-library/2.10.4&lt;/bundle&gt;</replacetoken> 
                                         <replacevalue>&lt;bundle dependency='true'&gt;mvn:org.scala-lang/scala-library/2.11.7&lt;/bundle&gt;
-    &lt;bundle dependency='true'&gt;mvn:org.scala-lang.modules/scala-parser-combinators_2.11/1.0.1&lt;/bundle&gt;</replacevalue>
+    &lt;bundle dependency='true'&gt;mvn:org.scala-lang.modules/scala-parser-combinators_2.11/1.0.1&lt;/bundle&gt;
+    &lt;bundle dependency='true'&gt;mvn:org.xerial.snappy/snappy-java/1.1.2&lt;/bundle&gt;</replacevalue>
                                     </replacefilter>
                                     <replacefilter>
                                         <replacetoken>&lt;bundle dependency='true'&gt;mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka_2.10/0.8.2.2_1&lt;/bundle&gt;</replacetoken> 

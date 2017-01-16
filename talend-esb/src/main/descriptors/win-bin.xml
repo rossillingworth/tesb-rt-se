@@ -630,6 +630,11 @@
             <outputDirectory>/container/system/org/apache/camel/camel-kafka/${camel.version}/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
+        <file>
+            <source>${basedir}/target/dependencies/snappy-java-1.1.2.jar</source>
+            <outputDirectory>/container/system/org/xerial/snappy/snappy-java/1.1.2/</outputDirectory>
+            <fileMode>0644</fileMode>
+        </file>
         <!-- patch for Karaf org.apache.karaf.features.core bundle (TESB-17093) -->
         <file>
             <source>${basedir}/target/dependencies/framework-${karaf.version}-features.xml</source>
