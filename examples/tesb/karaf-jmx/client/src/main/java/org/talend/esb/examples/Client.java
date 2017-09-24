@@ -87,40 +87,25 @@ public class Client {
 
         try {
 
-            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                    new String[] { "META-INF/spring/client-beans.xml" });
-
+            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "META-INF/spring/client-beans.xml" });
             Client client = (Client) context.getBean("Client");
 
-            JMXConnector jmxc = applicationManager.createRMIconnector(
-                    client.getServiceURL(), client.getEnvironment());
+            JMXConnector jmxc = applicationManager.createRMIconnector(client.getServiceURL(), client.getEnvironment());
+            MBeanServerConnection mbsc = applicationManager.getMBeanServerConnection(jmxc);
 
-            MBeanServerConnection mbsc = applicationManager
-                    .getMBeanServerConnection(jmxc);
+            FeaturesServiceMBean featuresServiceMBeanProxy = applicationManager.createFeaturesServiceMBeanProxy(mbsc);
+            FrameworkMBean osgiFrameworkProxy = applicationManager.createOsgiFrameworkMBeanProxy(mbsc);
 
-            FeaturesServiceMBean featuresServiceMBeanProxy = applicationManager
-                    .createFeaturesServiceMBeanProxy(mbsc);
+            applicationManager.addRepository(featuresServiceMBeanProxy, client.getRepositoryURL());
+            applicationManager.installFeature(featuresServiceMBeanProxy, client.getFeatureName());
 
-            FrameworkMBean osgiFrameworkProxy = applicationManager
-                    .createOsgiFrameworkMBeanProxy(mbsc);
-
-            applicationManager.addRepository(featuresServiceMBeanProxy,
-                    client.getRepositoryURL());
-
-            applicationManager.installFeature(featuresServiceMBeanProxy,
-                    client.getFeatureName());
-
-            long bundleNumber = applicationManager
-                    .startBundle(osgiFrameworkProxy, client.getBundleName());
+            long bundleNumber = applicationManager.startBundle(osgiFrameworkProxy, client.getBundleName());
 
             applicationManager.stopBundle(osgiFrameworkProxy, bundleNumber);
             waitForEnterPressed();
 
-            applicationManager.uninstallFeature(featuresServiceMBeanProxy,
-                    client.getFeatureName());
-
-            applicationManager.removeRepository(featuresServiceMBeanProxy,
-                    client.getRepositoryURL());
+            applicationManager.uninstallFeature(featuresServiceMBeanProxy, client.getFeatureName());
+            applicationManager.removeRepository(featuresServiceMBeanProxy, client.getRepositoryURL());
 
             sleep(5000);
 
